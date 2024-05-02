@@ -1,9 +1,20 @@
 import React from "react";
+import axios from "axios";
 
 const Login = () => {
-  const googleAuth = () => {
-    alert("botonLogin");
+  const googleAuth = async () => {
+    try {
+      // Realiza una solicitud al backend para iniciar sesión con Google
+      const response = await axios.get("http://localhost:4000/login/auth/google");
+      
+      // Si la solicitud es exitosa, redirige al usuario a la URL de autenticación de Google
+      console.log(response);
+      // window.location.href = response.data.redirectUrl;
+    } catch (error) {
+      console.error("Error al iniciar sesión con Google:", error);
+    }
   };
+  
   return (
     <div className="container">
       <div className="form_container">
