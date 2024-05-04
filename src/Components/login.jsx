@@ -1,17 +1,15 @@
 import React from "react";
-import axios from "axios";
 
 const Login = () => {
-const googleAuth = async () => {
-  try {
-    // Realiza una solicitud al backend para iniciar sesión con Google
-    window.location.href = "http://localhost:4000/login/auth/google";
-  } catch (error) {
-    console.error("Error al iniciar sesión con Google:", error);
-  }
-};
+  const googleAuth = async () => {
+    try {
+      // Realiza una solicitud al backend para iniciar sesión con Google
+      window.location.href = "http://localhost:4000/auth/google";
+    } catch (error) {
+      console.error("Error al iniciar sesión con Google:", error);
+    }
+  };
 
-  
   return (
     <div className="container">
       <div className="form_container">
