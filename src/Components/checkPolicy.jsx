@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types"
 import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
 
 const ChecPolicy = ({ checked, setChecked }) => {
   const [showDialog, setShowDialog] = useState(false);
   const [htmlContent, setHtmlContent] = useState("");
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const fetchPolicyContent = async () => {
@@ -13,7 +13,6 @@ const ChecPolicy = ({ checked, setChecked }) => {
         const response = await fetch("terminos_condiciones.html");
         const html = await response.text();
         setHtmlContent(html);
-        setVisible(true);
       } catch (error) {
         console.error("Error fetching policy content:", error);
       }
@@ -36,9 +35,9 @@ const ChecPolicy = ({ checked, setChecked }) => {
         checked={checked}
       ></Checkbox>{" "}
       I agree to HandyFix's{" "}
-      <span className="span" onClick={handleDialogOpen}>
+      <button className="span" onClick={handleDialogOpen}>
         Data Privacy Policy
-      </span>
+      </button>
       <Dialog
         header="Política de Privacidad de Datos"
         visible={showDialog}
@@ -54,6 +53,12 @@ const ChecPolicy = ({ checked, setChecked }) => {
       </Dialog>
     </div>
   );
+};
+
+// Define PropTypes para validar las props
+ChecPolicy.propTypes = {
+  checked: PropTypes.bool.isRequired, // Propiedad 'checked' debe ser de tipo booleano y requerida
+  setChecked: PropTypes.func.isRequired // Propiedad 'setChecked' debe ser de tipo función y requerida
 };
 
 export default ChecPolicy;
