@@ -87,17 +87,6 @@
     margin-bottom: 30px;
 }
 
-.input {
-    width: 320px;
-    height: 35px;
-    padding: 5px;
-    margin: 5px 0;
-    outline: none;
-    border: 1px solid #2c444e;
-    border-radius: 2px;
-    font-size: 13px;
-}
-
 .btn {
     font-size: 18px;
     font-weight: 500;
@@ -111,17 +100,13 @@
     cursor: pointer;
 }
 
-.text {
-    font-size: 14px;
-    color: #2c444e;
-    margin: 5px 0;
-    padding: 0;
-}
 
-.text > a{
-    font-size: 16px;
-    font-weight: 500;
-    color: #ffc801;
+.check{
+    margin-bottom: 1rem !important;
+}
+.span{
+    color: #ffc800;
+    cursor: pointer;
 }
 
 .google_btn {
@@ -142,6 +127,25 @@
     justify-content: center;
     position: relative;
 }
+.google_btn_disable{
+    width: 230px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: #e0e0e0;
+    box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 20px 0;
+    color: #2c444e;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    pointer-events: none;
+}
 
 .google_btn > img{
     width: 30px;
@@ -152,5 +156,16 @@
 .google_btn > span{
     margin-left: 10px;
 }
+
+.google_btn_disable > img{
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+
+.google_btn_disable > span{
+    margin-left: 10px;
+}
+
 
 /*End loguin*/

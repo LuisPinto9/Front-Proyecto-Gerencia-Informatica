@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import ChecPolicy from "./checPolicy";
 
 const Login = () => {
+  const [checked, setChecked] = useState(false);
   const googleAuth = async () => {
     try {
       // Realiza una solicitud al backend para iniciar sesión con Google
@@ -18,7 +20,8 @@ const Login = () => {
         </div>
         <div className="right">
           <h2 className="from_heading">Members Log in</h2>
-          <button className="google_btn" onClick={googleAuth}>
+          <ChecPolicy checked={checked} setChecked={setChecked}/>
+          <button className={checked ? 'google_btn' : 'google_btn_disable'} onClick={googleAuth} disabled={!checked}>
             <img src="./images/google.png" alt="google icon" />
             <span>Sing in with Google</span>
           </button>
