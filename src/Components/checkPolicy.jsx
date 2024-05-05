@@ -10,7 +10,7 @@ const ChecPolicy = ({ checked, setChecked }) => {
   useEffect(() => {
     const fetchPolicyContent = async () => {
       try {
-        const response = await fetch("poli.html");
+        const response = await fetch("terminos_condiciones.html");
         const html = await response.text();
         setHtmlContent(html);
         setVisible(true);
@@ -22,11 +22,9 @@ const ChecPolicy = ({ checked, setChecked }) => {
     fetchPolicyContent();
   }, []);
 
-
   const handleDialogOpen = () => {
     setShowDialog(true);
   };
-
 
   const handleDialogClose = () => {
     setShowDialog(false);
@@ -42,7 +40,7 @@ const ChecPolicy = ({ checked, setChecked }) => {
         Data Privacy Policy
       </span>
       <Dialog
-        header="Data Privacy Policy"
+        header="Política de Privacidad de Datos"
         visible={showDialog}
         onHide={handleDialogClose}
         breakpoints={{ "960px": "75vw" }}

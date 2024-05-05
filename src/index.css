@@ -1,171 +1,171 @@
 .container {
-    width: 100%;
-    min-height: 100vh; /* Asegura que el contenedor tenga al menos el tamaño de la pantalla */
-    background-color: #f0f8ff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  min-height: 100vh; /* Asegura que el contenedor tenga al menos el tamaño de la pantalla */
+  background-color: #f0f8ff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /*Login*/
 
 .heading {
-    font-size: 40px;
-    font-weight: 600;
-    color: #2c444e;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  font-size: 40px;
+  font-weight: 600;
+  color: #2c444e;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .heading::after {
-    content: "";
-    width: 450px;
-    height: 4px;
-    border-radius: 1px;
-    bottom: -20px;
-    background-color: #2c444e;
-    position: absolute;
+  content: "";
+  width: 450px;
+  height: 4px;
+  border-radius: 1px;
+  bottom: -20px;
+  background-color: #2c444e;
+  position: absolute;
 }
 
 .form_container {
-    display: flex;
-    margin-top: 45px;
-    width: 800px;
-    height: 450px;
-    background-color: white;
-    box-shadow: 3px 4px 36px -6px rgba(0,0,0,0.4);
-    border-radius: 50px;
+  display: flex;
+  margin-top: 45px;
+  width: 800px;
+  height: 450px;
+  background-color: white;
+  box-shadow: 3px 4px 36px -6px rgba(0, 0, 0, 0.4);
+  border-radius: 50px;
 }
 
 @media (max-width: 768px) {
-    .form_container {
-        width: 90%; /* Ancho ajustado para dispositivos móviles */
-        margin-top: 20px; /* Margen superior reducido */
-        flex-direction: column; /* Cambio a disposición en columna */
-    }
+  .form_container {
+    width: 90%; /* Ancho ajustado para dispositivos móviles */
+    margin-top: 20px; /* Margen superior reducido */
+    flex-direction: column; /* Cambio a disposición en columna */
+  }
 }
 
 .left {
-    flex: 1.5;
-    overflow: hidden;
-    position: relative;
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
+  flex: 1.5;
+  overflow: hidden;
+  position: relative;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
 }
 
 @media (max-width: 768px) {
-    .left {
-        border-top-left-radius: 50px;
-        border-bottom-left-radius: 0;
-        border-top-right-radius: 50px;
-    }
+  .left {
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 50px;
+  }
 }
 
 .img {
-    width: 160%;
-    position: absolute;
-    left: -150px;
-    top: -50px;
+  width: 160%;
+  position: absolute;
+  left: -150px;
+  top: -50px;
 }
 
 .right {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .from_heading {
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 25px;
-    font-weight: 400;
-    color: #2c444e;
-    margin-bottom: 30px;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: #2c444e;
+  margin-bottom: 30px;
 }
 
 .btn {
-    font-size: 18px;
-    font-weight: 500;
-    padding: 12px 25px;
-    color: white;
-    background-color: #ffc801;
-    border-radius: 12px;
-    margin: 10px 0 0 0;
-    outline: none;
-    border: none;
-    cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 12px 25px;
+  color: white;
+  background-color: #ffc801;
+  border-radius: 12px;
+  margin: 10px 0 0 0;
+  outline: none;
+  border: none;
+  cursor: pointer;
 }
 
-
-.check{
-    margin-bottom: 1rem !important;
+.check {
+  margin-bottom: 1rem !important;
 }
-.span{
-    color: #ffc800;
-    cursor: pointer;
+.span {
+  color: #ffc800;
+  cursor: pointer;
 }
 
 .google_btn {
-    width: 230px;
-    height: 40px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    background-color: white;
-    box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
-    font-size: 16px;
-    font-weight: 500;
-    margin: 0 0 20px 0;
-    color: #2c444e;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+  width: 230px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px,
+    rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 20px 0;
+  color: #2c444e;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
-.google_btn_disable{
-    width: 230px;
-    height: 40px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    background-color: #e0e0e0;
-    box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
-    font-size: 16px;
-    font-weight: 500;
-    margin: 0 0 20px 0;
-    color: #2c444e;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    pointer-events: none;
-}
-
-.google_btn > img{
-    width: 30px;
-    height: 30px;
-    object-fit: cover;
+.google_btn_disable {
+  width: 230px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #e0e0e0;
+  box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px,
+    rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 20px 0;
+  color: #2c444e;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  pointer-events: none;
 }
 
-.google_btn > span{
-    margin-left: 10px;
+.google_btn > img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
 }
 
-.google_btn_disable > img{
-    width: 30px;
-    height: 30px;
-    object-fit: cover;
+.google_btn > span {
+  margin-left: 10px;
 }
 
-.google_btn_disable > span{
-    margin-left: 10px;
+.google_btn_disable > img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
 }
 
+.google_btn_disable > span {
+  margin-left: 10px;
+}
 
 /*End loguin*/

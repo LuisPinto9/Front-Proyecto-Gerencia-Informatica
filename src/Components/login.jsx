@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ChecPolicy from "./checPolicy";
+import CheckPolicy from "./checkPolicy";
 
 const Login = () => {
   const [checked, setChecked] = useState(false);
@@ -20,8 +20,12 @@ const Login = () => {
         </div>
         <div className="right">
           <h2 className="from_heading">Members Log in</h2>
-          <ChecPolicy checked={checked} setChecked={setChecked}/>
-          <button className={checked ? 'google_btn' : 'google_btn_disable'} onClick={googleAuth} disabled={!checked}>
+          <CheckPolicy checked={checked} setChecked={setChecked} />
+          <button
+            className={checked ? "google_btn" : "google_btn_disable"}
+            onClick={googleAuth}
+            disabled={!checked}
+          >
             <img src="./images/google.png" alt="google icon" />
             <span>Sing in with Google</span>
           </button>
