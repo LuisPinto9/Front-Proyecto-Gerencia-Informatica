@@ -1,0 +1,15 @@
+import "../css/index.css";
+import "../css/closeFriend/closeFriend.css";
+import "../css/feed/feed.css";
+import "../css/home/home.css";
+import "../css/login/login.css";
+import "../css/online/online.css";
+import "../css/post/post.css";
+import "../css/profile/profile.css";
+import "../css/register/register.css";
+import "../css/rightbar/rightbar.css";
+import "../css/sharePost/share.css";
+import "../css/sidebar/sidebar.css";
+import "../css/topbar/topbar.css";
+import "primereact/resources/themes/lara-light-cyan/theme.css";
+import "primeicons/primeicons.css";

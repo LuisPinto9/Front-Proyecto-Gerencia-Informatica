@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 import { Checkbox } from "primereact/checkbox";
 import { Dialog } from "primereact/dialog";
 
@@ -58,7 +58,7 @@ const ChecPolicy = ({ checked, setChecked }) => {
 // Define PropTypes para validar las props
 ChecPolicy.propTypes = {
   checked: PropTypes.bool.isRequired, // Propiedad 'checked' debe ser de tipo booleano y requerida
-  setChecked: PropTypes.func.isRequired // Propiedad 'setChecked' debe ser de tipo función y requerida
+  setChecked: PropTypes.func.isRequired, // Propiedad 'setChecked' debe ser de tipo función y requerida
 };
 
 export default ChecPolicy;
