@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CheckPolicy from "./CheckPolicy";
 
-const Login = () => {
+const LoginComponent = () => {
   const [checked, setChecked] = useState(false);
   const googleAuth = async () => {
     try {
@@ -35,4 +35,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginComponent;
