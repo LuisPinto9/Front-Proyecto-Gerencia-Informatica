@@ -19,11 +19,13 @@ import { useState, useEffect } from "react";
 import Post from "../post/Post";
 import Share from "../sharePost/Share";
 
-export default function Feed() {
+export default function Feed({username}) {
   const [posts, setPosts] = useState([]);
+
   // console.log( result)
+  //fetch("http://localhost:4000/api/posts/timeline/66744d5b1f473bba191ac485")
   useEffect(() => {
-    fetch("http://localhost:4000/api/posts/timeline/66744d5b1f473bba191ac485")
+    fetch("http://localhost:4000/api/posts/profile/"+username)
       .then((res) => {
         if (!res.ok) {
           throw new Error('ok');

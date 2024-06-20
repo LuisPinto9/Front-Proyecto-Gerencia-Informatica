@@ -8,6 +8,7 @@ import Profile from "../pages/profile/Profile";
 import Register from "../pages/register/Register";
 
 const Router = () => {
+  // <Route exacth path="/profile/:username" Component={Profile} />
   return (
     <BrowserRouter>
       <Routes>
@@ -15,7 +16,7 @@ const Router = () => {
         <Route exact path="/login" Component={LoginP} />
         <Route exacth path="/dashboard" Component={Dashboard} />
         <Route exacth path="/home" Component={Home} />
-        <Route exacth path="/profile" Component={Profile} />
+        <Route exacth path="/profile/:username" Component={Profile} />
         <Route exacth path="/Register" Component={Register} />
       </Routes>
     </BrowserRouter>
