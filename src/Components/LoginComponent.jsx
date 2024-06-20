@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CheckPolicy from "./CheckPolicy";
+import CheckPolicy from "./checkPolicy";
 
 const LoginComponent = () => {
   const [checked, setChecked] = useState(false);

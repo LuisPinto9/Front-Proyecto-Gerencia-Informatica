@@ -1,10 +1,36 @@
 import MoreVert from "@mui/icons-material/MoreVert";
-import { Users } from "../../assets/js/dummyData";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 
 export default function Post({ post }) {
   const [like, setLike] = useState(post.like);
   const [isLiked, setIsLiked] = useState(false);
+  const [user, setUser] = useState({});
+  const [imagens] = useState("/images/person/");
+  
+
+
+  useEffect(() => {
+  fetch(`http://localhost:4000/api/users/${post.userId}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('ok');
+          }
+          return res.json();
+        })
+        .then(
+          (result) => {
+            console.log(post.userId)
+            console.log(result)
+            setUser(result);
+            
+          }
+        )
+        .catch((error) => {
+          console.log('Fetch error:', error);
+        });
+    }, []);
+
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
@@ -17,11 +43,11 @@ export default function Post({ post }) {
           <div className="postTopLeft">
             <img
               className="postProfileImg"
-              src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
+              src={user.profilePicture|| imagens+"9.jpeg"}
               alt=""
             />
             <span className="postUsername">
-              {Users.filter((u) => u.id === post?.userId)[0].username}
+              {user.username }
             </span>
             <span className="postDate">{post.date}</span>
           </div>
