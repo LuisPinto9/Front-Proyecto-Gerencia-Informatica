@@ -19,17 +19,16 @@ import { useState, useEffect } from "react";
 import Post from "../post/Post";
 import Share from "../sharePost/Share";
 
-export default function Feed({username}) {
+export default function Feed({user}) {
   const [posts, setPosts] = useState([]);
 
-  // console.log( result)
-  //fetch("http://localhost:4000/api/posts/timeline/66744d5b1f473bba191ac485")
+  console.log(user._id);
+  
   useEffect(() => {
-    // fetch(`http://localhost:4000/api/posts/profile/${username}`)
-    
-    const url = username
-    ? `http://localhost:4000/api/posts/profile/${username}`
-    : `http://localhost:4000/api/posts/timeline/${username}`;
+
+    const url = user
+    ? `http://localhost:4000/api/posts/profile/${localStorage.getItem("username").replace(/[\[\]"]/g, "")}`
+    : `http://localhost:4000/api/posts/timeline/${user._id}`;
 
   fetch(url)
       .then((res) => {
@@ -45,9 +44,9 @@ export default function Feed({username}) {
         }
       )
       .catch((error) => {
-        console.log('Fetch error:', error);
+        // console.log('Fetch error:', error);
       });
-  }, []);
+  }, [user]);
 
   return (
     <div className="feed">

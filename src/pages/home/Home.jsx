@@ -31,33 +31,61 @@ export default function Home() {
   const location = useLocation();
   const [tokenSaved, setTokenSaved] = useState(false);
   const [username, setUsername] = useState("");
-  // console.log(username2)
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const token = searchParams.get("token");
-    const username2 = searchParams.get("username");
-   
-    if (token) {
-      SaveLocalStorage("token", token);
-      setTokenSaved(true);
-    }
-    if (username2) {
-      setUsername(username2);
-    }
+  const [user, setUser] = useState("");
   
-  }, [location]);
 
+ 
+  useEffect(() => {
+    localStorage.clear();
+    const searchParams = new URLSearchParams(location.search);
+    
+    
+   
+    if (searchParams.get("token")) {
+      SaveLocalStorage("token", searchParams.get("token"));
+      setTokenSaved(true);
+
+    }
+    if (searchParams.get("username")) {
+      SaveLocalStorage("username", searchParams.get("username"));
+      setUsername(searchParams.get("username"));
+    }
+   
+    
+  
+  }, []);
+  useEffect(() => {
+    if (username) {
+      fetch(`http://localhost:4000/api/users?username=${username}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Fetch failed');
+          }
+          return res.json();
+        })
+        .then((result) => {
+         
+          // console.log(result);
+          setUser(result);
+        })
+        .catch((error) => {
+          // console.log('Fetch error:', error);
+        });
+    }
+  }, [username]);
+// console.log(user);
   return (
+   
     <>
-      <Topbar username={username}/>
+       <Topbar user={user} />
       <div className="homeContainer">
         <Sidebar />
         
-        <Feed username={username} />
+        <Feed user={user} />
         <Rightbar />
       </div>
-      {tokenSaved ? <div>Token saved successfully</div> : <div>Saving token...</div>}
-      {username ? <div> ${username}</div> : <div>Saving token...</div>}
+      {/* {tokenSaved ? <div>Token saved successfully</div> : <div>Saving token...</div>}
+      {user? <div> a</div> : <div>Saving token...</div>} */}
     </>
   );
 }

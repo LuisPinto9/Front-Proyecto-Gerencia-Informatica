@@ -12,11 +12,12 @@ export default function Profile() {
 
 
   const username=useParams().username;
-  console.log(username)
+  // console.log(username)
+
 
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/users?username=${username}`)
+    fetch(`http://localhost:4000/api/users?username=${localStorage. username}`)
           .then((res) => {
             if (!res.ok) {
               throw new Error('ok');
@@ -60,7 +61,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed  username={username}/>
+            <Feed  user={user}/>
             <Rightbar user={user} />
           </div>
         </div>

@@ -6,31 +6,32 @@ import { useState, useEffect } from "react";
 import {Link} from "react-router-dom"
 
 
-export default function Topbar({username}) {
-  const [user, setUser] = useState({});
+export default function Topbar({user}) {
+  // const [user, setUser] = useState({});
   
   
   const [imagens] = useState("/images/person/");
-  useEffect(() => {
-    fetch(`http://localhost:4000/api/users?username=${username}`)
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error('ok');
-            }
-            return res.json();
-          })
-          .then(
-            (result) => {
-              // console.log("resultado"+username);
-              // console.log(result)
-              setUser(result);
+  // useEffect(() => {
+    
+  //   fetch(`http://localhost:4000/api/users?username=${username}`)
+  //         .then((res) => {
+  //           if (!res.ok) {
+  //             throw new Error('ok');
+  //           }
+  //           return res.json();
+  //         })
+  //         .then(
+  //           (result) => {
+  //             // console.log("resultado"+username);
+  //             // console.log(result)
+  //             setUser(result);
               
-            }
-          )
-          .catch((error) => {
-            console.log('Fetch error:', error);
-          });
-      }, [username]);
+  //           }
+  //         )
+  //         .catch((error) => {
+  //           // console.log('Fetch error:', error);
+  //         });
+  //     }, [username]);
   
 
   return (
@@ -76,6 +77,7 @@ export default function Topbar({username}) {
         </div>
        
       </div>
+      
     </div>
   );
 }
