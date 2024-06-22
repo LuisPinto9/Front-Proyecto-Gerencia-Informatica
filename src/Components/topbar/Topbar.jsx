@@ -2,8 +2,37 @@ import Search from "@mui/icons-material/Search";
 import Person from "@mui/icons-material/Person";
 import Chat from "@mui/icons-material/Chat";
 import Notifications from "@mui/icons-material/Notifications";
+import { useState, useEffect } from "react";
+import {Link} from "react-router-dom"
 
-export default function Topbar() {
+
+export default function Topbar({username}) {
+  const [user, setUser] = useState({});
+  
+  
+  const [imagens] = useState("/images/person/");
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/users?username=${username}`)
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error('ok');
+            }
+            return res.json();
+          })
+          .then(
+            (result) => {
+              // console.log("resultado"+username);
+              // console.log(result)
+              setUser(result);
+              
+            }
+          )
+          .catch((error) => {
+            console.log('Fetch error:', error);
+          });
+      }, [username]);
+  
+
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -37,8 +66,15 @@ export default function Topbar() {
             <Notifications />
             <span className="topbarIconBadge">1</span>
           </div>
+          <Link to={`http://localhost:3000/profile/${user.username}`}>
+              
+          <div className="topbarIconItem">
+          <img src={user.profilePicture ||imagens+"1.jpeg"} alt="" className="topbarImg"/>
+          </div>
+
+          </Link> 
         </div>
-        <img src="images/person/1.jpeg" alt="" className="topbarImg" />
+       
       </div>
     </div>
   );

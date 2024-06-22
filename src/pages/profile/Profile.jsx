@@ -33,7 +33,7 @@ export default function Profile() {
           .catch((error) => {
             console.log('Fetch error:', error);
           });
-      }, []);
+      }, [username]);
   
   return (
     <>

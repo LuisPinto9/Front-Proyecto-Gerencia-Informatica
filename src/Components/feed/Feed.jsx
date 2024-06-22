@@ -25,7 +25,13 @@ export default function Feed({username}) {
   // console.log( result)
   //fetch("http://localhost:4000/api/posts/timeline/66744d5b1f473bba191ac485")
   useEffect(() => {
-    fetch("http://localhost:4000/api/posts/profile/"+username)
+    // fetch(`http://localhost:4000/api/posts/profile/${username}`)
+    
+    const url = username
+    ? `http://localhost:4000/api/posts/profile/${username}`
+    : `http://localhost:4000/api/posts/timeline/${username}`;
+
+  fetch(url)
       .then((res) => {
         if (!res.ok) {
           throw new Error('ok');
