@@ -3,16 +3,14 @@ import Person from "@mui/icons-material/Person";
 import Chat from "@mui/icons-material/Chat";
 import Notifications from "@mui/icons-material/Notifications";
 import { useState, useEffect } from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
-
-export default function Topbar({user}) {
+export default function Topbar({ user }) {
   // const [user, setUser] = useState({});
-  
-  
+
   const [imagens] = useState("/images/person/");
   // useEffect(() => {
-    
+
   //   fetch(`http://localhost:4000/api/users?username=${username}`)
   //         .then((res) => {
   //           if (!res.ok) {
@@ -25,14 +23,13 @@ export default function Topbar({user}) {
   //             // console.log("resultado"+username);
   //             // console.log(result)
   //             setUser(result);
-              
+
   //           }
   //         )
   //         .catch((error) => {
   //           // console.log('Fetch error:', error);
   //         });
   //     }, [username]);
-  
 
   return (
     <div className="topbarContainer">
@@ -68,16 +65,16 @@ export default function Topbar({user}) {
             <span className="topbarIconBadge">1</span>
           </div>
           <Link to={`http://localhost:3000/profile/${user.username}`}>
-              
-          <div className="topbarIconItem">
-          <img src={user.profilePicture ||imagens+"1.jpeg"} alt="" className="topbarImg"/>
-          </div>
-
-          </Link> 
+            <div className="topbarIconItem">
+              <img
+                src={user.profilePicture || imagens + "1.jpeg"}
+                alt=""
+                className="topbarImg"
+              />
+            </div>
+          </Link>
         </div>
-       
       </div>
-      
     </div>
   );
 }

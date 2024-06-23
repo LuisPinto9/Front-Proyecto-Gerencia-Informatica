@@ -3,8 +3,6 @@
 // import Feed from "../../Components/feed/Feed";
 // import Rightbar from "../../Components/rightbar/Rightbar";
 
-
-
 // export default function Home() {
 //   return (
 //     <>
@@ -17,7 +15,6 @@
 //     </>
 //   );
 // }
-
 
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -32,39 +29,30 @@ export default function Home() {
   const [tokenSaved, setTokenSaved] = useState(false);
   const [username, setUsername] = useState("");
   const [user, setUser] = useState("");
-  
 
- 
   useEffect(() => {
     localStorage.clear();
     const searchParams = new URLSearchParams(location.search);
-    
-    
-   
+
     if (searchParams.get("token")) {
       SaveLocalStorage("token", searchParams.get("token"));
       setTokenSaved(true);
-
     }
     if (searchParams.get("username")) {
       SaveLocalStorage("username", searchParams.get("username"));
       setUsername(searchParams.get("username"));
     }
-   
-    
-  
   }, []);
   useEffect(() => {
     if (username) {
       fetch(`http://localhost:4000/api/users?username=${username}`)
         .then((res) => {
           if (!res.ok) {
-            throw new Error('Fetch failed');
+            throw new Error("Fetch failed");
           }
           return res.json();
         })
         .then((result) => {
-         
           // console.log(result);
           setUser(result);
         })
@@ -73,14 +61,13 @@ export default function Home() {
         });
     }
   }, [username]);
-// console.log(user);
+  // console.log(user);
   return (
-   
     <>
-       <Topbar user={user} />
+      <Topbar user={user} />
       <div className="homeContainer">
         <Sidebar />
-        
+
         <Feed user={user} />
         <Rightbar />
       </div>
