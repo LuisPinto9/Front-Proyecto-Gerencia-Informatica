@@ -2,22 +2,70 @@ import PermMedia from "@mui/icons-material/PermMedia";
 import Label from "@mui/icons-material/Label";
 import Room from "@mui/icons-material/Room";
 import EmojiEmotions from "@mui/icons-material/EmojiEmotions";
+import { useState, useEffect , useRef} from "react";
+  
+export default function Share({user}) {
+  const [imagens] = useState("/images/person/");
+  const desc =useRef()
+  const[file,setFile]= useState(null)
 
-export default function Share() {
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const newPost = {
+      userId: user._id,
+      desc: desc.current.value,
+    };
+  
+    if (file) {
+      const data = new FormData();
+      const fileName = Date.now() + file.name;
+      data.append("name", fileName);
+      data.append("file", file);
+      newPost.img = fileName;
+  
+      fetch("http://localhost:4000/api/posts/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPost),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        setVisible(false);
+        if (data.state) {
+          setFlag(true);
+        }
+      })
+      .catch((error) => {
+        setVisible(false);
+        console.error("Error:", error);
+      });
+    } else {
+      setVisible(false);
+      console.warn("Por favor, agrega una imagen.");
+    }
+  };
+  
   return (
     <div className="share">
       <div className="shareWrapper">
         <div className="shareTop">
-          <img className="shareProfileImg" src="images/person/1.jpeg" alt="" />
-          <input placeholder="¿ Qué estás pensando ?" className="shareInput" />
+          <img className="shareProfileImg" src={user.profilePicture ||imagens+"1.jpeg"} alt="" />
+          <input placeholder={"has una publicacion: "+user.username} className="shareInput"ref={desc} />
         </div>
         <hr className="shareHr" />
-        <div className="shareBottom">
+        <div className="shareBottom" onSubmit={submitHandler}>
           <div className="shareOptions">
-            <div className="shareOption">
+            <label htmlFor="file" className="shareOption">
               <PermMedia htmlColor="tomato" className="shareIcon" />
               <span className="shareOptionText">Fotos o Videos</span>
-            </div>
+              </label>
+              <input style={{display:"none"}}
+              type ="file" id="file" accept=".png,.jpeg,.jpg" 
+              onChange={(e)=>setFile(e.target.files[0])}> 
+              </input>
+           
             <div className="shareOption">
               <Label htmlColor="blue" className="shareIcon" />
               <span className="shareOptionText">Tags</span>
@@ -31,7 +79,7 @@ export default function Share() {
                     <span className="shareOptionText">Feelings</span>
   </div>*/}
           </div>
-          <button className="shareButton">Publicar</button>
+          <button className="shareButton" type="submit">Publicar</button>
         </div>
       </div>
     </div>
