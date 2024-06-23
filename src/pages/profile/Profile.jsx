@@ -5,37 +5,28 @@ import Rightbar from "../../Components/rightbar/Rightbar";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
-// fetch(`http://localhost:4000/api/users/${post.userId}`)
 export default function Profile() {
   const [user, setUser] = useState({});
   const [imagens] = useState("/images/person/");
 
-
-  const username=useParams().username;
-  // console.log(username)
-
-
+  const username = useParams().username;
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/users?username=${localStorage. username}`)
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error('ok');
-            }
-            return res.json();
-          })
-          .then(
-            (result) => {
-              console.log(result)
-              setUser(result);
-              
-            }
-          )
-          .catch((error) => {
-            console.log('Fetch error:', error);
-          });
-      }, [username]);
-  
+    fetch(`http://localhost:4000/api/users?username=${username}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("ok");
+        }
+        return res.json();
+      })
+      .then((result) => {
+        setUser(result);
+      })
+      .catch((error) => {
+        console.log("Fetch error:", error);
+      });
+  }, [username]);
+
   return (
     <>
       <Topbar user={user} />
@@ -46,12 +37,12 @@ export default function Profile() {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src={imagens+"1.jpeg"}
+                src={imagens + "1.jpeg"}
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src={user.profilePicture ||imagens+"1.jpeg"}
+                src={user.profilePicture || imagens + "1.jpeg"}
                 alt=""
               />
             </div>
@@ -61,7 +52,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed  user={user}/>
+            <Feed user={user} />
             <Rightbar user={user} />
           </div>
         </div>
