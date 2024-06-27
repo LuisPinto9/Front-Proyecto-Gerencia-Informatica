@@ -69,7 +69,7 @@ export default function Home() {
         <Sidebar />
 
         <Feed user={user} />
-        <Rightbar />
+        <Rightbar  user={user}/>
       </div>
       {/* {tokenSaved ? <div>Token saved successfully</div> : <div>Saving token...</div>}
       {user? <div> a</div> : <div>Saving token...</div>} */}

@@ -1,7 +1,34 @@
 import { Users } from "../../assets/js/dummyData";
 import Online from "../online/Online";
+import { useState, useEffect } from "react";
 
 export default function Rightbar({ user }) {
+  const [follows, setFollows] = useState([]);
+  const [imagens] = useState("/images/person/");
+  useEffect(() => {
+    if (user) {
+      loadUser();
+    }
+  }, [user._id]);
+
+  const loadUser = () => {
+    const url = `http://localhost:4000/api/users/${user._id}/getFollows`;
+
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("ok");
+        }
+        return res.json();
+      })
+      .then((result) => {
+        setFollows(result);
+      })
+      .catch((error) => {
+        // console.log('Fetch error:', error);
+      });
+  };
+
   const HomeRightbar = () => {
     return (
       <>
@@ -42,45 +69,25 @@ export default function Rightbar({ user }) {
         </div>
         <h4 className="rightbarTitle">Siguiendo</h4>
         <div className="rightbarFollowings">
-          <div className="rightbarFollowing">
-            <img
-              src="images/person/2.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">Sebastian Barrera</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src="images/person/3.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">Reparación de ...</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src="images/person/4.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">Luis Pinto</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src="images/person/5.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">Plomero Jorge</span>
-          </div>
+          {follows.map((follows) => (
+            <div className="rightbarFollowing">
+              <img
+                src={follows.profilePicture || imagens + "1.jpeg"}
+                alt=""
+                className="rightbarFollowingImg"
+              />
+              <span className="rightbarFollowingName">{follows.username}</span>
+            </div>
+          ))}
+
+          
           <div className="rightbarFollowing">
             <img
               src="images/person/6.jpeg"
               alt=""
               className="rightbarFollowingImg"
             />
-            <span className="rightbarFollowingName">Robinson Aguilar</span>
+            <span className="rightbarFollowingName">usuario ejemplo</span>
           </div>
         </div>
       </>
