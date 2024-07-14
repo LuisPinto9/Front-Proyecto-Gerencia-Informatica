@@ -36,7 +36,7 @@ export default function Home() {
           return res.json();
         })
         .then((result) => {
-          // console.log(result);
+          console.log("usuario final",result);
           setUser(result);
         })
         .catch((error) => {
