@@ -1,20 +1,3 @@
-// import Topbar from "../../Components/topbar/Topbar";
-// import Sidebar from "../../Components/sidebar/Sidebar";
-// import Feed from "../../Components/feed/Feed";
-// import Rightbar from "../../Components/rightbar/Rightbar";
-
-// export default function Home() {
-//   return (
-//     <>
-//       <Topbar />
-//       <div className="homeContainer">
-//         <Sidebar />
-//         <Feed />
-//         <Rightbar />
-//       </div>
-//     </>
-//   );
-// }
 
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -44,7 +27,7 @@ export default function Home() {
     }
   }, []);
   useEffect(() => {
-    if (username) {
+    if (username) { 
       fetch(`http://localhost:4000/api/users?username=${username}`)
         .then((res) => {
           if (!res.ok) {

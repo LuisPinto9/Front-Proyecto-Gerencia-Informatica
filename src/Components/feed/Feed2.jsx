@@ -1,25 +1,24 @@
 
-
 import { useState, useEffect } from "react";
 import Post from "../post/Post";
 import Share from "../sharePost/Share";
 
-export default function Feed({ user }) {
+export default function Feed2({ user }) {
   const [posts, setPosts] = useState([]);
 
-  // console.log(user._id);
-  // console.log(user.username);
+  console.log(user._id);
+  console.log(user.username);
   useEffect(() => {
     if (user) {
+      loadPost();
       loadPost();
     }
   }, [user]);
 
   const loadPost = () => {
+    console.log("fedd2",user.username)
     const url = user
-      ? `http://localhost:4000/api/posts/profile/${localStorage
-          .getItem("username")
-          .replace(/[\[\]"]/g, "")}`
+      ? `http://localhost:4000/api/posts/profile/${user.username}`
       : `http://localhost:4000/api/posts/timeline/${user._id}`;
 
     fetch(url)
@@ -46,7 +45,16 @@ export default function Feed({ user }) {
   return (
     <div className="feed">
       <div className="feedWrapper">
-        <Share user={user} loadPost={loadPost} />
+        {/* publicar sin iciar sesion */}
+        {/* <Share user={user} loadPost={loadPost} /> */}
+        
+        {/* {
+          console.log("nombre de ",user.username,localStorage.getItem("username").replace(/[\[\]"]/g, ""))
+        } */}
+
+        {user.username === localStorage.getItem("username").replace(/[\[\]"]/g, "")
+         && <Share /> }
+
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}

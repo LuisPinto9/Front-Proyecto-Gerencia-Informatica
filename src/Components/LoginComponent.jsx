@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CheckPolicy from "./checkPolicy";
-
+ 
 const LoginComponent = () => {
   const [checked, setChecked] = useState(false);
   const googleAuth = async () => {

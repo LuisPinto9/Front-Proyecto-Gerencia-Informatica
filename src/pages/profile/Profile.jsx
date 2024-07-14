@@ -1,6 +1,6 @@
 import Topbar from "../../Components/topbar/Topbar";
 import Sidebar from "../../Components/sidebar/Sidebar";
-import Feed from "../../Components/feed/Feed";
+import Feed2 from "../../Components/feed/Feed2";
 import Rightbar from "../../Components/rightbar/Rightbar";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
@@ -15,6 +15,7 @@ export default function Profile() {
     fetch(`http://localhost:4000/api/users?username=${username}`)
       .then((res) => {
         if (!res.ok) {
+          
           throw new Error("ok");
         }
         return res.json();
@@ -52,7 +53,10 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed user={user} />
+            <Feed2 user={user} />
+            {
+              console.log("prfoile",user.username)
+            }
             <Rightbar user={user} />
           </div>
         </div>
