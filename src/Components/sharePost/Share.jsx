@@ -3,6 +3,9 @@ import Label from "@mui/icons-material/Label";
 import Room from "@mui/icons-material/Room";
 import EmojiEmotions from "@mui/icons-material/EmojiEmotions";
 import { useState, useEffect, useRef } from "react";
+import '../../assets/css/components/sharePost/share.css';
+
+import { Cancel} from "@mui/icons-material";
 
 export default function Share({ user, loadPost }) {
   const [imagens] = useState("/images/person/");
@@ -16,6 +19,7 @@ export default function Share({ user, loadPost }) {
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
+      
     };
 
     if (file) {
@@ -60,12 +64,20 @@ export default function Share({ user, loadPost }) {
             alt=""
           />
           <input
-            placeholder={"has una publicacion: " + user.username}
+            placeholder={"has una publicacion: " + user.username + "?"}
             className="shareInput"
             ref={desc}
           />
         </div>
         <hr className="shareHr" />
+        {file && (
+
+          <div className="shareImgContainer">
+          <img src="shareImg" src2={URL.createObjectURL(file)} alt="" />
+          <Cancel className="shareCancelImg" onClick={()=>setFile(null)}/>
+          </div>)}
+
+
         <div className="shareBottom" onSubmit={submitHandler}>
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
