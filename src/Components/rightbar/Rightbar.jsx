@@ -95,8 +95,9 @@ export default function Rightbar({ user }) {
 
   const handleClick = async () => {
     try {
-      if (followed) {
-        const url = `http://localhost:4000/api/users/${user._id}/follow`;
+      const url = followed 
+        ? `http://localhost:4000/api/users/${user._id}/unfollow`
+        : `http://localhost:4000/api/users/${user._id}/follow`;
 
         fetch(url, {
           method: "PUT",
@@ -114,36 +115,13 @@ export default function Rightbar({ user }) {
             return response.json();
           })
           .then((data) => {
-            console.log("Success:", data);
-          })
-          .catch((error) => {
-            console.log("Fetch error:", error);
-          });
-      } else {
-        const url = `http://localhost:4000/api/users/${user._id}/unfollow`;
-
-        fetch(url, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userId: userPrincipal._id }),
+          console.log("Success:", data);
+          setFollowed(!followed);
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(
-                "Network response was not ok " + response.statusText
-              );
-            }
-            return response.json();
-          })
-          .then((data) => {
-            console.log("Success:", data);
-          })
           .catch((error) => {
             console.log("Fetch error:", error);
           });
-      }
+      
     } catch (err) {
       console.log(err);
     }

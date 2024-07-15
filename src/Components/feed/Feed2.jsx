@@ -17,9 +17,13 @@ export default function Feed2({ user }) {
 
   const loadPost = () => {
     console.log("fedd2",user.username)
+
+    
     const url = user
       ? `http://localhost:4000/api/posts/profile/${user.username}`
       : `http://localhost:4000/api/posts/timeline/${user._id}`;
+
+
 
     fetch(url)
       .then((res) => {
