@@ -1,10 +1,10 @@
 
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Topbar from "../../Components/topbar/Topbar";
-import Sidebar from "../../Components/sidebar/Sidebar";
-import Feed from "../../Components/feed/Feed";
-import Rightbar from "../../Components/rightbar/Rightbar";
+import Topbar from "../../components/topbar/Topbar";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Feed from "../../components/feed/Feed";
+import Rightbar from "../../components/rightbar/Rightbar";
 import { SaveLocalStorage } from "../../helpers/SaveLocalStorage";
 
 export default function Home() {

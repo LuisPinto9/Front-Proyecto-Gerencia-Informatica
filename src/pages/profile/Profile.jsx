@@ -1,7 +1,7 @@
-import Topbar from "../../Components/topbar/Topbar";
-import Sidebar from "../../Components/sidebar/Sidebar";
-import Feed2 from "../../Components/feed/Feed2";
-import Rightbar from "../../Components/rightbar/Rightbar";
+import Topbar from "../../components/topbar/Topbar";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Feed2 from "../../components/feed/Feed2";
+import Rightbar from "../../components/rightbar/Rightbar";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
