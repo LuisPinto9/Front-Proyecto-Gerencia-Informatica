@@ -2,24 +2,21 @@ import PermMedia from "@mui/icons-material/PermMedia";
 import Label from "@mui/icons-material/Label";
 import Room from "@mui/icons-material/Room";
 import EmojiEmotions from "@mui/icons-material/EmojiEmotions";
-import { useState, useEffect, useRef } from "react";
-import '../../assets/css/components/sharePost/share.css';
-
-import { Cancel} from "@mui/icons-material";
+import { useState, useRef } from "react";
+import "../../assets/css/components/sharePost/share.css";
+import { Cancel } from "@mui/icons-material";
 
 export default function Share({ user, loadPost }) {
   const [imagens] = useState("/images/person/");
   const desc = useRef();
   const [file, setFile] = useState(null);
-  const [visible, setVisible] = useState(false);
+  const fileInputRef = useRef();
 
-  const [flag, setFlag] = useState(false);
   const submitHandler = (e) => {
     e.preventDefault();
     const newPost = {
       userId: user._id,
       desc: desc.current.value,
-      
     };
 
     if (file) {
@@ -39,18 +36,61 @@ export default function Share({ user, loadPost }) {
         .then((response) => response.json())
         .then((data) => {
           loadPost();
-          setVisible(false);
           if (data.state) {
-            setFlag(true);
+            setFile(null);
+            fileInputRef.current.value = null;
           }
         })
         .catch((error) => {
-          setVisible(false);
           console.error("Error:", error);
         });
     } else {
-      setVisible(false);
       console.warn("Por favor, agrega una imagen.");
+    }
+  };
+
+  const handleCancelImage = () => {
+    setFile(null);
+    fileInputRef.current.value = null;
+  };
+
+  const uploadCapturedImage = async () => {
+    setIsUploading(true);
+
+    if (capturedImage) {
+      try {
+        const uniqueTimestamp = new Date().toISOString().replace(/[:.-]/g, "");
+
+        const blob = await fetch(capturedImage).then((res) => res.blob());
+        const fileType = blob.type;
+        let fileExtension = "";
+
+        if (fileType === "image/jpeg") {
+          fileExtension = "jpg";
+        } else if (fileType === "image/png") {
+          fileExtension = "png";
+        } else {
+          throw new Error("Unsupported image format");
+        }
+
+        const uniqueFileName = `capturedImage_${uniqueTimestamp}.${fileExtension}`;
+        const formData = new FormData();
+        formData.append("file", blob, uniqueFileName);
+
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/login/uploadTemporal`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        return await response.text();
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      } finally {
+        setIsUploading(false);
+      }
     }
   };
 
@@ -64,21 +104,29 @@ export default function Share({ user, loadPost }) {
             alt=""
           />
           <input
-            placeholder={"has una publicacion: " + user.username + "?"}
+            placeholder={"haz una publicacion: " + user.username + "?"}
             className="shareInput"
             ref={desc}
           />
         </div>
         <hr className="shareHr" />
         {file && (
-
           <div className="shareImgContainer">
-          <img src="shareImg" src2={URL.createObjectURL(file)} alt="" />
-          <Cancel className="shareCancelImg" onClick={()=>setFile(null)}/>
-          </div>)}
+            <img
+              src={URL.createObjectURL(file)}
+              alt=""
+              className="shareImg"
+            />
+            <button
+              className="shareCancelImgButton"
+              onClick={handleCancelImage}
+            >
+              <Cancel />
+            </button>
+          </div>
+        )}
 
-
-        <div className="shareBottom" onSubmit={submitHandler}>
+        <div className="shareBottom">
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
               <PermMedia htmlColor="tomato" className="shareIcon" />
@@ -90,6 +138,7 @@ export default function Share({ user, loadPost }) {
               id="file"
               accept=".png,.jpeg,.jpg"
               onChange={(e) => setFile(e.target.files[0])}
+              ref={fileInputRef}
             ></input>
 
             <div className="shareOption">
@@ -98,7 +147,7 @@ export default function Share({ user, loadPost }) {
             </div>
             <div className="shareOption">
               <Room htmlColor="green" className="shareIcon" />
-              <span className="shareOptionText">Ubicacion</span>
+              <span className="shareOptionText">Ubicación</span>
             </div>
           </div>
 
