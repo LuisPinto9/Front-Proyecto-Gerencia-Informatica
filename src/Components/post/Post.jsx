@@ -39,6 +39,7 @@ export default function Post({ post }) {
   };
 
   useEffect(() => {
+    console.log(post);
     fetch(`http://localhost:4000/api/users?userId=${post.userId}`)
       .then((res) => {
         if (!res.ok) {
@@ -55,11 +56,6 @@ export default function Post({ post }) {
         console.log("Fetch error:", error);
       });
   }, []);
-
-  // const likeHandler = () => {
-  //   setLike(isLiked ? like - 1 : like + 1);
-  //   setIsLiked(!isLiked);
-  // };
   return (
     <div className="post">
       <div className="postWrapper">
@@ -92,16 +88,10 @@ export default function Post({ post }) {
               onClick={likeHandler}
               alt=""
             />
-            <img
-              className="likeIcon"
-              src="images/heart.png"
-              onClick={likeHandler}
-              alt=""
-            />
             <span className="postLikeCounter">{like} Me gusta</span>
           </div>
           <div className="postBottomRight">
-            <span className="postCommentText">{post.comment} Comentarios</span>
+            <span className="postCommentText">{post.comments} Comentarios</span>
           </div>
         </div>
       </div>
