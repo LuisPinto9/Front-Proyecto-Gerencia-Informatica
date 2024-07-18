@@ -65,7 +65,12 @@ export default function Post({ post }) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`http://localhost:3000/profile/${user.username}`}>
+            {/* {
+              console.log("holiiis",user.username,"http://localhost:3000/profile/",user.username)
+            } */}
+
+
+            <Link to={`http://localhost:3000/profile/${user.username}`}>            
               <img
                 className="postProfileImg"
                 src={user.profilePicture || imagens + "9.jpeg"}

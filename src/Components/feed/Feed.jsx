@@ -14,7 +14,7 @@ export default function Feed({ user }) {
       loadPost();
     }
   }, [user]);
-
+ 
   const loadPost = () => {
     const url = user
       ? `http://localhost:4000/api/posts/profile/${localStorage
@@ -24,7 +24,7 @@ export default function Feed({ user }) {
 
     fetch(url)
       .then((res) => {
-        if (!res.ok) {
+        if (!res.ok) { 
           throw new Error("ok");
         }
         return res.json();

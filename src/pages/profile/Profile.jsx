@@ -2,31 +2,70 @@ import Topbar from "../../Components/topbar/Topbar";
 import Sidebar from "../../Components/sidebar/Sidebar";
 import Feed2 from "../../Components/feed/Feed2";
 import Rightbar from "../../Components/rightbar/Rightbar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router";
 
 export default function Profile() {
-  const [user, setUser] = useState({});
+
+  const [user2, setUser2] = useState({});
   const [imagens] = useState("/images/person/");
 
-  const username = useParams().username;
+  const username = useParams().username
+  const [user, setUser] = useState({});
+  const cleanUsername = (username) => {
+    return username.replace(/[\[\]"]/g, "");
+  };
+
+  const fetchUser = useCallback(async () => {
+    try {
+      console.log("limpio",cleanUsername(username))
+      console.log("lno impio",username)
+      // const res = await fetch(`http://localhost:4000/api/users?username=${user.username === cleanUsername(username)}`);
+      const res = await fetch(`http://localhost:4000/api/users?username=${username}`);
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const result = await res.json();
+      console.log("Resultado del fetch:", result);
+      setUser(result);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  }, [username]);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/users?username=${username}`)
-      .then((res) => {
-        if (!res.ok) {
+    console.log("Username:", username);
+    fetchUser();
+    console.log("Usuario ", user);
+  }, [username, fetchUser]);
+
+  // useEffect(() => {
+    
+  //   fetch(`http://localhost:4000/api/users?username=${username}`)
+  //     .then((res) => {
+  //       if (!res.ok) {
           
-          throw new Error("ok");
-        }
-        return res.json();
-      })
-      .then((result) => {
-        setUser(result);
-      })
-      .catch((error) => {
-        console.log("Fetch error:", error);
-      });
-  }, [username]);
+  //         throw new Error("ok");
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       setUser2(result);
+  //       setUser(result);
+        
+  //       console.log("aca debe salirresultado", result)
+  //       console.log("aca debe salir")
+  //       console.log("aca debe salir",user,"resultado",user2)
+  //     })
+  //     .catch((error) => {
+  //       console.log("Fetch error:", error);
+  //     });
+  // }, [username]);
+
+
+  useEffect(() => {
+    console.log("User updated:", user);
+  }, [user]);
 
   return (
     <>

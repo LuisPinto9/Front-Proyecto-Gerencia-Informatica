@@ -25,7 +25,7 @@ export default function Feed2({ user }) {
 
 
 
-    fetch(url)
+    fetch(`http://localhost:4000/api/posts/profile/${user.username}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("ok");
@@ -56,9 +56,9 @@ export default function Feed2({ user }) {
           console.log("nombre de ",user.username,localStorage.getItem("username").replace(/[\[\]"]/g, ""))
         } */}
 
-        {user.username === localStorage.getItem("username").replace(/[\[\]"]/g, "")
-         && <Share /> }
-
+        {/* {user.username === localStorage.getItem("username").replace(/[\[\]"]/g, "")
+         && <Share /> } */}
+<Share user={user} loadPost={loadPost} />
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}
