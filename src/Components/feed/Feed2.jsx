@@ -56,9 +56,8 @@ export default function Feed2({ user }) {
           console.log("nombre de ",user.username,localStorage.getItem("username").replace(/[\[\]"]/g, ""))
         } */}
 
-        {user.username === localStorage.getItem("username").replace(/[\[\]"]/g, "")
-         && <Share /> }
-
+        
+        <Share user={user} loadPost={loadPost} />
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}
