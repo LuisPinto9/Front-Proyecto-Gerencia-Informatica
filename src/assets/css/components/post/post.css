@@ -73,12 +73,9 @@
 
 .postCommentText {
   cursor: pointer;
-  padding: 5px;
   border-bottom: 1px dashed gray;
   font-size: 15px;
 }
-
-/* de aqui abajo son estilos de las clases que tengan que ver con comments */
 
 .postBottomRight {
   width: 100%;
@@ -104,7 +101,7 @@
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #FCCF04;
   color: white;
   cursor: pointer;
 }
