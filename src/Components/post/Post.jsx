@@ -120,11 +120,11 @@ export default function Post({ post }) {
             <div className="postCommentInput">
               <input
                 type="text"
-                placeholder="Add a comment..."
+                placeholder="Comenta al usuario..."
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
-              <button onClick={submitCommentHandler}>Post</button>
+              <button onClick={submitCommentHandler}>Comentar</button>
             </div>
             <span className="postCommentText">
               {comments.length} Comentarios
