@@ -34,45 +34,89 @@
   margin: 0 10px;
 }
 
-.postDate{
-    font-size: 12px;
+.postDate {
+  font-size: 12px;
 }
 
-.postCenter{
-    margin: 20px 0;
+.postCenter {
+  margin: 20px 0;
 }
 
-.postImg{
-    margin-top: 20px;
-    width: 100%;
-    max-height: 500px;
-    object-fit: contain;
+.postImg {
+  margin-top: 20px;
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
 }
 
-.postBottom{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.postBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.postBottomLeft{
-    display: flex;
-    align-items: center;   
+.postBottomLeft {
+  display: flex;
+  align-items: center;
 }
 
-.likeIcon{
-    width: 24px;
-    height: 24px;
-    margin-right: 5px;
-    cursor: pointer;
+.likeIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+  cursor: pointer;
 }
 
-.postLikeCounter{
-    font-size: 15px;
+.postLikeCounter {
+  font-size: 15px;
 }
 
-.postCommentText{
-    cursor: pointer;
-    border-bottom: 1px dashed gray;
-    font-size: 15px;
+.postCommentText {
+  cursor: pointer;
+  padding: 5px;
+  border-bottom: 1px dashed gray;
+  font-size: 15px;
+}
+
+/* de aqui abajo son estilos de las clases que tengan que ver con comments */
+
+.postBottomRight {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.postCommentInput {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.postCommentInput input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.postCommentInput button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.postComments {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.comment {
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }

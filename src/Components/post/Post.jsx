@@ -1,13 +1,41 @@
 import MoreVert from "@mui/icons-material/MoreVert";
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// fetch(`http://localhost:4000/api/users/${post.userId}`)
+
 export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const [imagens] = useState("/images/person/");
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState(post.comments); // State to manage comments
+
+  // Handler to submit comments (only adds comments to the comments array)
+  const submitCommentHandler = async () => {
+    console.log("Submit comment working");
+    try {
+      const response = await fetch(`http://localhost:4000/api/posts/${post._id}/comment`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: user._id, text: comment }), // Only sends user ID and comment to add comments without time or user
+      });
+
+      console.log("fetch complete", response);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const updatedPost = await response.json();
+      setComments(updatedPost.comments); // Update comments state with the new comments
+      setComment(""); // Clear the input field after successful submission
+    } catch (error) {
+      console.error("Error posting comment:", error);
+      console.log("fetch error");
+    }
+  };
 
   const likeHandler = async () => {
     console.log("entro");
@@ -19,7 +47,7 @@ export default function Post({ post }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ userId: user._id }), // Envía el userId al servidor
+          body: JSON.stringify({ userId: user._id }), // Sends the user ID to the server
         }
       );
       console.log("entro", response);
@@ -48,14 +76,13 @@ export default function Post({ post }) {
         return res.json();
       })
       .then((result) => {
-        // console.log(post.userId)
-        // console.log(result)
         setUser(result);
       })
       .catch((error) => {
         console.log("Fetch error:", error);
       });
-  }, []);
+  }, [post.userId]);
+
   return (
     <div className="post">
       <div className="postWrapper">
@@ -68,7 +95,6 @@ export default function Post({ post }) {
                 alt=""
               />
             </Link>
-
             <span className="postUsername"> {user.username} </span>
             <span className="postDate">{post.createdAt}</span>
           </div>
@@ -91,7 +117,25 @@ export default function Post({ post }) {
             <span className="postLikeCounter">{like} Me gusta</span>
           </div>
           <div className="postBottomRight">
-            <span className="postCommentText">{post.comments} Comentarios</span>
+            <div className="postCommentInput">
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <button onClick={submitCommentHandler}>Post</button>
+            </div>
+            <span className="postCommentText">
+              {comments.length} Comentarios
+            </span>
+            <div className="postComments">
+              {comments.map((c, index) => (
+                <div key={index} className="comment">
+                  {c}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
