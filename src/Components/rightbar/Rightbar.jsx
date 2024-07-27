@@ -1,9 +1,9 @@
 import { Users } from "../../assets/js/dummyData";
 import Online from "../online/Online";
-import '../../assets/css/components/rightbar/rightbar.css';
+import "../../assets/css/components/rightbar/rightbar.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Add ,Remove} from "@mui/icons-material";
+import { Add, Remove } from "@mui/icons-material";
 
 export default function Rightbar({ user }) {
   //amiguis
@@ -12,7 +12,6 @@ export default function Rightbar({ user }) {
   //swguidores
   const [followed, setFollowed] = useState(false);
   const [userPrincipal, setUserPrincipalFollowed] = useState(false);
-
 
   useEffect(() => {
     if (user) {
@@ -26,8 +25,6 @@ export default function Rightbar({ user }) {
       getUserfollowed();
     }
   }, [userPrincipal]);
-
-
 
   const getUserfollowed = () => {
     setFollowed(userPrincipal.followings.includes(user?.id));
@@ -76,13 +73,13 @@ export default function Rightbar({ user }) {
     return (
       <>
         <div className="birthdayContainer">
-          <img className="birthdayImg" src="images/gift.png" alt="" />
+          <img className="birthdayImg" src="/images/gift.png" alt="" />
           <span className="birthdayText">
             <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
           </span>
         </div>
 
-        <img className="rightbarAd" src="images/ad.png" alt="" />
+        <img className="rightbarAd" src="/images/ad.png" alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
           {Users.map((u) => (
@@ -95,37 +92,36 @@ export default function Rightbar({ user }) {
 
   const handleClick = async () => {
     try {
-      const url = followed 
+      const url = followed
         ? `http://localhost:4000/api/users/${user._id}/unfollow`
         : `http://localhost:4000/api/users/${user._id}/follow`;
 
-        fetch(url, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userId: userPrincipal._id }),
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: userPrincipal._id }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok " + response.statusText
+            );
+          }
+          return response.json();
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(
-                "Network response was not ok " + response.statusText
-              );
-            }
-            return response.json();
-          })
-          .then((data) => {
+        .then((data) => {
           console.log("Success:", data);
           setFollowed(!followed);
         })
-          .catch((error) => {
-            console.log("Fetch error:", error);
-          });
-      
+        .catch((error) => {
+          console.log("Fetch error:", error);
+        });
     } catch (err) {
       console.log(err);
     }
-    setFollowed(!followed)
+    setFollowed(!followed);
   };
   const ProfileRightbar = () => {
     return (
@@ -172,7 +168,7 @@ export default function Rightbar({ user }) {
 
           <div className="rightbarFollowing">
             <img
-              src="images/person/6.jpeg"
+              src="/images/person/6.jpeg"
               alt=""
               className="rightbarFollowingImg"
             />

@@ -1,19 +1,33 @@
-
-
 import { useState, useEffect } from "react";
 import Post from "../post/Post";
 import Share from "../sharePost/Share";
 
-export default function Feed({ user }) {
+export default function Feed({ user, home }) {
   const [posts, setPosts] = useState([]);
 
-  // console.log(user._id);
-  // console.log(user.username);
   useEffect(() => {
-    if (user) {
-      loadPost();
-    }
+    user && !home ? loadPost() : loadAllPosts();
   }, [user]);
+
+  const loadAllPosts = () => {
+    fetch("http://localhost:4000/api/posts/allPosts")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("ok");
+        }
+        return res.json();
+      })
+      .then((result) => {
+        setPosts(
+          result.sort((p1, p2) => {
+            return new Date(p2.createdAt) - new Date(p1.createdAt);
+          })
+        );
+      })
+      .catch((error) => {
+        // console.log('Fetch error:', error);
+      });
+  };
 
   const loadPost = () => {
     const url = user
@@ -30,13 +44,11 @@ export default function Feed({ user }) {
         return res.json();
       })
       .then((result) => {
-        setPosts(result.sort((p1,p2)=>{
-          return new Date(p2.createdAt)-new Date(p1.createdAt)
-        }
-        
-        )
-      
-      );
+        setPosts(
+          result.sort((p1, p2) => {
+            return new Date(p2.createdAt) - new Date(p1.createdAt);
+          })
+        );
       })
       .catch((error) => {
         // console.log('Fetch error:', error);

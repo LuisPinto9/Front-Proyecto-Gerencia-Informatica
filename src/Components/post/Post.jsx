@@ -110,7 +110,7 @@ export default function Post({ post }) {
           <div className="postBottomLeft">
             <img
               className="likeIcon"
-              src="images/like.png"
+              src="/images/like.png"
               onClick={likeHandler}
               alt=""
             />

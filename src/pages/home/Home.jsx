@@ -50,8 +50,7 @@ export default function Home() {
       <Topbar user={user} />
       <div className="homeContainer">
         <Sidebar />
-
-        <Feed user={user} />
+        <Feed user={user} home={true}/>
         <Rightbar  user={user}/>
       </div>
       {/* {tokenSaved ? <div>Token saved successfully</div> : <div>Saving token...</div>}
