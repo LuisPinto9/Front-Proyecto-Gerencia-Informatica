@@ -49,15 +49,12 @@ export default function Feed2({ user }) {
   return (
     <div className="feed">
       <div className="feedWrapper">
-        {/* publicar sin iciar sesion */}
-        {/* <Share user={user} loadPost={loadPost} /> */}
         
-        {/* {
-          console.log("nombre de ",user.username,localStorage.getItem("username").replace(/[\[\]"]/g, ""))
-        } */}
+
+      {user.username === localStorage.getItem("username").replace(/[\[\]"]/g, "")
+         && <Share user={user} loadPost={loadPost} /> }
 
         
-        <Share user={user} loadPost={loadPost} />
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}
