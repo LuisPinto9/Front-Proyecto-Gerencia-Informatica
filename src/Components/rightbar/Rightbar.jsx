@@ -42,6 +42,7 @@ export default function Rightbar({ user }) {
     
   };
 
+
   const getUserPrincipal = () => {
     fetch(
       `${import.meta.env.VITE_API_URL}/api/users?username=${localStorage
@@ -216,23 +217,61 @@ export default function Rightbar({ user }) {
           </button>
         )}
 
+{/* username: user.username || "",
+        phone: user.phone || "",
+        city: user.city || "",
+        from: user.from || "",
+        desc: user.desc || "", */}
+
         <h4 className="rightbarTitle">Información de usuario</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">Departamento:</span>
-            <span className="rightbarInfoValue">Boyacá</span>
+            <span className="rightbarInfoKey">Ciudad actual:</span>
+            <span className="rightbarInfoValue">{user.city}</span>
           </div>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">De:</span>
-            <span className="rightbarInfoValue">Mongua</span>
+            <span className="rightbarInfoValue">{user.from}</span>
           </div>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Teléfono:</span>
-            <span className="rightbarInfoValue">3114543488</span>
+            <span className="rightbarInfoValue">{user.phone}</span>
           </div>
+          <div className="rightbarInfoItem">
+            <span className="rightbarInfoKey">contacto:</span>
+            <span className="rightbarInfoValue">{user.email}</span>
+          </div>
+          <div className="rightbarInfoItem">
+            <span className="rightbarInfoKey">Descripcion:</span>
+            <span className="rightbarInfoValue">{user.desc}</span>
+          </div>
+
         </div>
 
         <h4 className="rightbarTitle">Siguiendo</h4>
+        <div className="rightbarFollowings">
+          {follows && follows.length > 0 ? (
+            follows.map((follow) => (
+              <div key={follow.username} className="rightbarFollowing">
+                <Link to={`/profile/${follow.username}`}>
+                  <img
+                    src={follow.profilePicture || `${imagens}1.jpeg`}
+                    alt=""
+                    className="rightbarFollowingImg"
+                  />
+                </Link>
+                <span className="rightbarFollowingName">{follow.username}</span>
+              </div>
+            ))
+          ) : (
+            <p>
+              Aún no sigues a nadie. ¡Explora y encuentra personas interesantes
+              a seguir!
+            </p>
+          )}
+        </div>
+
+        <h4 className="rightbarTitle">Seguidores</h4>
         <div className="rightbarFollowings">
           {follows && follows.length > 0 ? (
             follows.map((follow) => (
