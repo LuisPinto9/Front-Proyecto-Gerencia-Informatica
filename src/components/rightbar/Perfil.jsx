@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { json,Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Add, Remove } from "@mui/icons-material";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
@@ -9,11 +9,8 @@ import { Users } from "../../assets/js/dummyData";
 import "../../assets/css/components/rightbar/rightbar.css";
 import Online from "../online/Online";
 
-
 export default function Perfil({ user }) {
-
   const [follower, setFollower] = useState([]);
-
   const [follows, setFollows] = useState([]);
   const [imagens] = useState("/images/person/");
   const [followed, setFollowed] = useState(false);
@@ -22,6 +19,12 @@ export default function Perfil({ user }) {
   const [editUser, setEditUser] = useState({
     username: "",
     phone: "",
+    city: "",
+    from: "",
+    desc: "",
+    skills: "", 
+    workExperience: "", 
+    interests: "" 
   });
   const toast = useRef(null);
 
@@ -31,7 +34,6 @@ export default function Perfil({ user }) {
     }
   }, [user]);
 
-  
   const getUserPrincipal = () => {
     fetch(
       `${import.meta.env.VITE_API_URL}/api/users?username=${localStorage
@@ -48,56 +50,10 @@ export default function Perfil({ user }) {
         setUserPrincipalFollowed(result);
       })
       .catch((error) => {
-        console.error("Fetch error:", error);
+        // console.error("Fetch error:", error);
       });
   };
 
-  // const loadUser = () => {
-  //   const url = `${import.meta.env.VITE_API_URL}/api/users/${user._id}/getFollows`;
-
-  //   fetch(url)
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw new Error("ok");
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       setFollows(result);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Fetch error:", error);
-  //     });
-  // };
-
-  
-
-
-  // const handleClick = async () => {
-  //   const url = followed
-  //     ? `${import.meta.env.VITE_API_URL}/api/users/${user._id}/unfollow`
-  //     : `${import.meta.env.VITE_API_URL}/api/users/${user._id}/follow`;
-
-  //   fetch(url, {
-  //     method: "PUT",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ userId: userPrincipal._id }),
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok " + response.statusText);
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       setFollowed(!followed);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Fetch error:", error);
-  //     });
-  // };
   useEffect(() => {
     if (user) {
       setEditUser({
@@ -106,10 +62,15 @@ export default function Perfil({ user }) {
         city: user.city || "",
         from: user.from || "",
         desc: user.desc || "",
+        interests: user.interests || "",
+        workExperience: user.workExperience || "",
+        skills: user.skills || "",
       });
     }
   }, [user]);
+
   const handleEditUser = async () => {
+    // console.log("usuario edita",editUser)
     const url = `${import.meta.env.VITE_API_URL}/api/users/update/${user._id}`;
     fetch(url, {
       method: "PATCH",
@@ -195,39 +156,51 @@ export default function Perfil({ user }) {
       <>
         {user.username ===
           localStorage.getItem("username").replace(/[\[\]"]/g, "") && (
-          <Button
-            label="Editar"
-            icon="pi pi-pencil"
-            onClick={() => setShowEditModal(true)}
-          />
+          <div className="rightbarInfoItem1">
+            <h4 className="rightbarTitle">Editar Perfil</h4>
+            <Button
+              label="Editar"
+              icon="pi pi-pencil"
+              onClick={() => setShowEditModal(true)}
+            />
+          </div>
         )}
-        
 
-        <h4 className="rightbarTitle">Información de usuario</h4>
-        <div className="rightbarInfo">
+        <div className="rightbarInfoItem1">
+          <span className="rightbarTitle">UBICACION</span>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Ciudad actual:</span>
             <span className="rightbarInfoValue">{user.city}</span>
-          </div>
-          <div className="rightbarInfoItem">
+            <p></p>
             <span className="rightbarInfoKey">De:</span>
             <span className="rightbarInfoValue">{user.from}</span>
           </div>
+          <span className="rightbarTitle">INFORMACION DE CONTACTO</span>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Teléfono:</span>
             <span className="rightbarInfoValue">{user.phone}</span>
-          </div>
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">contacto:</span>
+            <p></p>
+            <span className="rightbarInfoKey">correo:</span>
             <span className="rightbarInfoValue">{user.email}</span>
           </div>
+          <h4 className="rightbarTitle">INFORMACION DE PERFIL</h4>
           <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">Descripcion:</span>
+            <span className="rightbarInfoKey">Acerca de mi:</span>
             <span className="rightbarInfoValue">{user.desc}</span>
           </div>
-
+          <div className="rightbarInfoItem">
+            <span className="rightbarInfoKey">Experiencia laboral:</span>
+            <span className="rightbarInfoValue">{user.workExperience}</span>
+          </div>
+          <div className="rightbarInfoItem">
+            <span className="rightbarInfoKey">Intereses:</span>
+            <span className="rightbarInfoValue">{user.interests}</span>
+          </div>
+          <div className="rightbarInfoItem">
+            <span className="rightbarInfoKey">Habilidades:</span>
+            <span className="rightbarInfoValue">{user.skills}</span>
+          </div>
         </div>
-
       </>
     );
   };
@@ -295,6 +268,36 @@ export default function Perfil({ user }) {
               }
             />
           </div>
+          <div className="p-field">
+            <label htmlFor="skills">Habilidades</label>
+            <InputText
+              id="skills"
+              value={editUser.skills}
+              onChange={(e) =>
+                setEditUser({ ...editUser, skills: e.target.value })
+              }
+            />
+          </div><div className="p-field">
+            <label htmlFor="workExperience">Experiencia</label>
+            <InputText
+              id="workExperience"
+              value={editUser.workExperience}
+              onChange={(e) =>
+                setEditUser({ ...editUser, workExperience: e.target.value })
+              }
+            />
+          </div><div className="p-field">
+            <label htmlFor="interests">Intereses</label>
+            <InputText
+              id="interests"
+              value={editUser.interests}
+              onChange={(e) =>
+                setEditUser({ ...editUser, interests: e.target.value })
+              }
+            />
+          </div>
+
+
         </div>
       </Dialog>
       <Toast ref={toast} />

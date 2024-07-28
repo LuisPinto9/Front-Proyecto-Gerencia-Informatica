@@ -1,3 +1,5 @@
+
+
 .rightbar {
   flex: 3.5;
 }
@@ -107,4 +109,32 @@
 }
 .rightbarFollowButton:focus {
   outline: none;
+}
+
+.rightbarInfoItem1{
+  background-color: rgb(255, 255, 255);
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.rightbarInfoItem {
+  /* background-color: rgb(255, 255, 255); */
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.rightbarInfoKey {
+  background-color: rgb(255, 255, 255);
+  font-weight: bold;
+  display: block;
+}
+
+.rightbarInfoValue {
+  background-color: rgb(255, 255, 255);
+  display: block;
 }
