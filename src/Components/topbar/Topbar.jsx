@@ -5,37 +5,36 @@ import Notifications from "@mui/icons-material/Notifications";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function Topbar({ user }) {
-  // const [user, setUser] = useState({});
-
+export default function Topbar({ username }) {
+  const [user, setUser] = useState({});
   const [imagens] = useState("/images/person/");
-  // useEffect(() => {
 
-  //   fetch(`http://localhost:4000/api/users?username=${username}`)
-  //         .then((res) => {
-  //           if (!res.ok) {
-  //             throw new Error('ok');
-  //           }
-  //           return res.json();
-  //         })
-  //         .then(
-  //           (result) => {
-  //             // console.log("resultado"+username);
-  //             // console.log(result)
-  //             setUser(result);
-
-  //           }
-  //         )
-  //         .catch((error) => {
-  //           // console.log('Fetch error:', error);
-  //         });
-  //     }, [username]);
+  useEffect(() => {
+    fetch(`http://localhost:4000/api/users?username=${username}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("ok");
+        }
+        return res.json();
+      })
+      .then((result) => {
+        setUser(result);
+      })
+      .catch((error) => {
+        // console.log('Fetch error:', error);
+      });
+  }, [username]);
 
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
-        <span className="logo">Handy</span>
-        <span className="logo1">Fix</span>
+        <Link
+          to={`http://localhost:3000/home`}
+          style={{ textDecoration: "none" }}
+        >
+          <span className="logo">Handy</span>
+          <span className="logo1">Fix</span>
+        </Link>
       </div>
       <div className="topbarCenter">
         <div className="searchbar">
@@ -67,7 +66,7 @@ export default function Topbar({ user }) {
           <Link to={`http://localhost:3000/profile/${user.username}`}>
             <div className="topbarIconItem">
               <img
-                src={user.profilePicture || imagens + "1.jpeg"}
+                src={user.profilePicture || imagens + "1.png"}
                 alt=""
                 className="topbarImg"
               />

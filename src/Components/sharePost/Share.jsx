@@ -57,12 +57,12 @@ export default function Share({ user, loadPost, homeStatus, loadAllPosts }) {
           <Link to={`http://localhost:3000/profile/${user.username}`}>
             <img
               className="shareProfileImg"
-              src={user.profilePicture || imagens + "1.jpeg"}
+              src={user.profilePicture || imagens + "1.png"}
               alt=""
             />
           </Link>
           <input
-            placeholder={"haz una publicacion: " + user.username + "?"}
+            placeholder={`¿Quieres hacer una publicación ${user.username}? `}
             className="shareInput"
             ref={desc}
             onKeyUp={(e) => {

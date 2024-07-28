@@ -94,7 +94,7 @@ export default function Post({ post, deletePost }) {
             <Link to={`http://localhost:3000/profile/${user.username}`}>
               <img
                 className="postProfileImg"
-                src={user.profilePicture || imagens + "9.jpeg"}
+                src={user.profilePicture || imagens + "1.png"}
                 alt=""
               />
             </Link>

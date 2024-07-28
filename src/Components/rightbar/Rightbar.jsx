@@ -29,6 +29,7 @@ export default function Rightbar({ user }) {
   const getUserfollowed = () => {
     setFollowed(userPrincipal.followings.includes(user?.id));
   };
+
   const getUserPrincipal = () => {
     fetch(
       `http://localhost:4000/api/users?username=${localStorage
@@ -51,7 +52,6 @@ export default function Rightbar({ user }) {
   };
 
   const loadUser = () => {
-    console.log("rigbar", user.username);
     const url = `http://localhost:4000/api/users/${user._id}/getFollows`;
 
     fetch(url)
@@ -123,12 +123,12 @@ export default function Rightbar({ user }) {
     }
     setFollowed(!followed);
   };
+
   const ProfileRightbar = () => {
     return (
       <>
         {/* para seguirme */}
-        {user.username !==
-          localStorage.getItem("username").replace(/[\[\]"]/g, "") && (
+        {user.username !== JSON.parse(localStorage.getItem("username"))[0] && (
           <button className="rightbarFollowButton" onClick={handleClick}>
             {followed ? "Unfollow" : "Follow"}
             {followed ? <Remove /> : <Add />}
@@ -176,6 +176,7 @@ export default function Rightbar({ user }) {
       </>
     );
   };
+
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">

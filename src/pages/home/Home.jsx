@@ -14,15 +14,17 @@ export default function Home() {
   const homeStatus = true;
 
   useEffect(() => {
-    localStorage.clear();
     const searchParams = new URLSearchParams(location.search);
 
-    if (searchParams.get("token")) {
+    if (searchParams.get("token") && !tokenSaved) {
+      localStorage.clear();
       SaveLocalStorage("token", searchParams.get("token"));
       setTokenSaved(true);
     }
-    if (searchParams.get("username")) {
+    if (searchParams.get("username") && !tokenSaved) {
       SaveLocalStorage("username", searchParams.get("username"));
+    }
+    if (JSON.parse(localStorage.getItem("username")) !== null) {
       setUsername(JSON.parse(localStorage.getItem("username"))[0]);
     }
   }, []);
@@ -45,10 +47,10 @@ export default function Home() {
         });
     }
   }, [username]);
-  // console.log(user);
+
   return (
     <>
-      <Topbar user={user} />
+      <Topbar username={username} />
       <div className="homeContainer">
         <Sidebar />
         <Feed user={user} homeStatus={homeStatus} />

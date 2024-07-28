@@ -16,7 +16,6 @@ export default function Profile() {
     fetch(`http://localhost:4000/api/users?username=${username}`)
       .then((res) => {
         if (!res.ok) {
-          
           throw new Error("ok");
         }
         return res.json();
@@ -31,7 +30,7 @@ export default function Profile() {
 
   return (
     <>
-      <Topbar user={user}/>
+      <Topbar username={JSON.parse(localStorage.getItem("username"))[0]} />
       <div className="profile">
         <Sidebar />
         <div className="profileRight">
@@ -39,12 +38,12 @@ export default function Profile() {
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src={imagens + "1.jpeg"}
+                src={imagens + "1 copy.png"}
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src={user.profilePicture || imagens + "1.jpeg"}
+                src={user.profilePicture || imagens + "1.png"}
                 alt=""
               />
             </div>
@@ -54,10 +53,8 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed2 user={user} homeStatus={homeStatus}/>
-            {
-              console.log("prfoile",user.username)
-            }
+            <Feed2 user={user} homeStatus={homeStatus} />
+            {console.log("prfoile", user.username)}
             <Rightbar user={user} />
           </div>
         </div>
