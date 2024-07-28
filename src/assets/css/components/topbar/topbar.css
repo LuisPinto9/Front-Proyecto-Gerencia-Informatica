@@ -31,6 +31,7 @@
 
 .topbarCenter {
   flex: 5;
+  position: relative; /* Asegura que los resultados de búsqueda se posicionen relativos a este contenedor */
 }
 
 .searchbar {
@@ -40,6 +41,8 @@
   border-radius: 30px;
   display: flex;
   align-items: center;
+  position: relative; /* Para mantener el input de búsqueda en su lugar */
+  z-index: 2; /* Asegura que el input esté encima de los resultados */
 }
 
 .searchIcon {
@@ -103,4 +106,38 @@
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
+}
+
+.searchResults {
+  position: absolute;
+  top: 35px; /* Posiciona los resultados justo debajo de la barra de búsqueda */
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 1; /* Asegura que los resultados estén debajo del input de búsqueda */
+}
+
+.searchResultItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.searchResultItem:hover {
+  background-color: #f1f1f1;
+}
+
+.searchResultImg {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.searchResultName {
+  font-size: 14px;
 }

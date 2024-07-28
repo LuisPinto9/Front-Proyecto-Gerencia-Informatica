@@ -1,12 +1,14 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Search from "@mui/icons-material/Search";
 import Person from "@mui/icons-material/Person";
 import Chat from "@mui/icons-material/Chat";
 import Notifications from "@mui/icons-material/Notifications";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 export default function Topbar({ username }) {
   const [user, setUser] = useState({});
+  const [searchText, setSearchText] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [imagens] = useState("/images/person/");
 
   useEffect(() => {
@@ -21,17 +23,37 @@ export default function Topbar({ username }) {
         setUser(result);
       })
       .catch((error) => {
-        // console.log('Fetch error:', error);
+        console.log('Fetch error:', error);
       });
   }, [username]);
+
+  const handleSearch = async (e) => {
+    setSearchText(e.target.value);
+    if (e.target.value.length > 0) {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/search?username=${e.target.value}`);
+        if (!res.ok) {
+          throw new Error("Search failed");
+        }
+        const results = await res.json();
+        setSearchResults(results);
+      } catch (err) {
+        console.error("Search error:", err);
+      }
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const handleResultClick = () => {
+    setSearchText("");
+    setSearchResults([]);
+  };
 
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
-        <Link
-          to={`/home`}
-          style={{ textDecoration: "none" }}
-        >
+        <Link to={`/home`} style={{ textDecoration: "none" }}>
           <span className="logo">Handy</span>
           <span className="logo1">Fix</span>
         </Link>
@@ -42,13 +64,36 @@ export default function Topbar({ username }) {
           <input
             placeholder="Busca negocios o personas"
             className="searchInput"
+            value={searchText}
+            onChange={handleSearch}
           />
+          {searchResults.length > 0 && (
+            <div className="searchResults">
+              {searchResults.map((result) => (
+                <Link
+                  key={result._id}
+                  to={`/profile/${result.username}`}
+                  onClick={handleResultClick}
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <div className="searchResultItem">
+                    <img
+                      src={result.profilePicture || imagens + "1.png"}
+                      alt=""
+                      className="searchResultImg"
+                    />
+                    <span className="searchResultName">{result.username}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
           <Link to={`/home`} style={{ textDecoration: "none", color: "white" }}>
-            <span className="topbarLink">Início</span>
+            <span className="topbarLink">Inicio</span>
           </Link>
           <span className="topbarLink">Historial</span>
         </div>
