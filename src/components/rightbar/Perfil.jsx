@@ -10,11 +10,6 @@ import "../../assets/css/components/rightbar/rightbar.css";
 import Online from "../online/Online";
 
 export default function Perfil({ user }) {
-  const [follower, setFollower] = useState([]);
-  const [follows, setFollows] = useState([]);
-  const [imagens] = useState("/images/person/");
-  const [followed, setFollowed] = useState(false);
-  const [userPrincipal, setUserPrincipalFollowed] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editUser, setEditUser] = useState({
     username: "",
