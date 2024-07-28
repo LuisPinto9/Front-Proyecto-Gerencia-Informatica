@@ -33,10 +33,15 @@ export default function Share({ user, loadPost, homeStatus, loadAllPosts }) {
             if (data.userId) {
               setFile(null);
               fileInputRef.current.value = null;
-              desc.current.value = ""; // Limpia la descripción si es necesario
+              desc.current.value = "";
+              setDisable(true);
             }
           } else {
             loadAllPosts();
+            setFile(null);
+            fileInputRef.current.value = null;
+            desc.current.value = "";
+            setDisable(true);
           }
         })
         .catch((error) => {

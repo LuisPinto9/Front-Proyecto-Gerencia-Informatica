@@ -2,7 +2,7 @@ import { Users } from "../../assets/js/dummyData";
 import Online from "../online/Online";
 import "../../assets/css/components/rightbar/rightbar.css";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 import { Add, Remove } from "@mui/icons-material";
 
 export default function Rightbar({ user }) {
@@ -27,14 +27,17 @@ export default function Rightbar({ user }) {
   }, [userPrincipal]);
 
   const getUserfollowed = () => {
-    setFollowed(userPrincipal.followings.includes(user?.id));
+    const isFollowed = userPrincipal.followings.some(
+      (following) => following._id === user._id
+    );
+    setFollowed(isFollowed);
   };
 
   const getUserPrincipal = () => {
     fetch(
-      `http://localhost:4000/api/users?username=${localStorage
-        .getItem("username")
-        .replace(/[\[\]"]/g, "")}`
+      `http://localhost:4000/api/users?username=${
+        JSON.parse(localStorage.getItem("username"))[0]
+      }`
     )
       .then((res) => {
         if (!res.ok) {
@@ -43,7 +46,6 @@ export default function Rightbar({ user }) {
         return res.json();
       })
       .then((result) => {
-        console.log("usuario final", result);
         setUserPrincipalFollowed(result);
       })
       .catch((error) => {
@@ -127,7 +129,6 @@ export default function Rightbar({ user }) {
   const ProfileRightbar = () => {
     return (
       <>
-        {/* para seguirme */}
         {user.username !== JSON.parse(localStorage.getItem("username"))[0] && (
           <button className="rightbarFollowButton" onClick={handleClick}>
             {followed ? "Unfollow" : "Follow"}
