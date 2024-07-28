@@ -5,18 +5,21 @@ import EmojiEmotions from "@mui/icons-material/EmojiEmotions";
 import { useState, useRef } from "react";
 import "../../assets/css/components/sharePost/share.css";
 import { Cancel } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
-export default function Share({ user, loadPost }) {
+export default function Share({ user, loadPost, homeStatus, loadAllPosts }) {
   const [imagens] = useState("/images/person/");
+  const [disable, setDisable] = useState(true);
   const desc = useRef();
   const [file, setFile] = useState(null);
   const fileInputRef = useRef();
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const data = new FormData();
-    if (file) data.append("img", file); // Asegúrate de que la clave 'img' coincida con lo que espera tu backend. 
-    if (desc.current.value) data.append("desc", desc.current.value);
+    if (desc.current.value) {
+      const data = new FormData();
+      if (file) data.append("img", file); // Asegúrate de que la clave 'img' coincida con lo que espera tu backend.
+      if (desc.current.value) data.append("desc", desc.current.value);
       data.append("userId", user._id);
 
       fetch("http://localhost:4000/api/posts/", {
@@ -25,16 +28,21 @@ export default function Share({ user, loadPost }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          loadPost();
-          if (data.userId) {
-            setFile(null);
-            fileInputRef.current.value = null;
-            desc.current.value = ""; // Limpia la descripción si es necesario
+          if (!homeStatus) {
+            loadPost();
+            if (data.userId) {
+              setFile(null);
+              fileInputRef.current.value = null;
+              desc.current.value = ""; // Limpia la descripción si es necesario
+            }
+          } else {
+            loadAllPosts();
           }
         })
         .catch((error) => {
           console.error("Error:", error);
         });
+    }
   };
 
   const handleCancelImage = () => {
@@ -46,15 +54,27 @@ export default function Share({ user, loadPost }) {
     <div className="share">
       <div className="shareWrapper">
         <div className="shareTop">
-          <img
-            className="shareProfileImg"
-            src={user.profilePicture || imagens + "1.jpeg"}
-            alt=""
-          />
+          <Link to={`http://localhost:3000/profile/${user.username}`}>
+            <img
+              className="shareProfileImg"
+              src={user.profilePicture || imagens + "1.jpeg"}
+              alt=""
+            />
+          </Link>
           <input
             placeholder={"haz una publicacion: " + user.username + "?"}
             className="shareInput"
             ref={desc}
+            onKeyUp={(e) => {
+              if (desc.current.value) {
+                setDisable(false);
+                if (e.key === "Enter") {
+                  submitHandler(e);
+                }
+              } else {
+                setDisable(true);
+              }
+            }}
           />
         </div>
         <hr className="shareHr" />
@@ -85,8 +105,12 @@ export default function Share({ user, loadPost }) {
               ref={fileInputRef}
             ></input>
           </div>
-
-          <button className="shareButton" type="button" onClick={submitHandler}>
+          <button
+            className={`shareButton ${disable ? "disabled" : ""}`}
+            type="button"
+            onClick={submitHandler}
+            disabled={disable}
+          >
             Publicar
           </button>
         </div>

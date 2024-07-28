@@ -2,35 +2,34 @@ import MoreVert from "@mui/icons-material/MoreVert";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function Post({ post }) {
+export default function Post({ post, deletePost }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
   const [imagens] = useState("/images/person/");
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState(post.comments); // State to manage comments
+  const [comments, setComments] = useState(post.comments);
+  const [menuVisible, setMenuVisible] = useState(false);
 
-  // Handler to submit comments (only adds comments to the comments array)
   const submitCommentHandler = async () => {
-    console.log("Submit comment working");
     try {
-      const response = await fetch(`http://localhost:4000/api/posts/${post._id}/comment`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId: user._id, text: comment }), // Only sends user ID and comment to add comments without time or user
-      });
-
-      console.log("fetch complete", response);
-
+      const response = await fetch(
+        `http://localhost:4000/api/posts/${post._id}/comment`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: user._id, text: comment }),
+        }
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
       const updatedPost = await response.json();
-      setComments(updatedPost.comments); // Update comments state with the new comments
-      setComment(""); // Clear the input field after successful submission
+      setComments(updatedPost.comments);
+      setComment("");
     } catch (error) {
       console.error("Error posting comment:", error);
       console.log("fetch error");
@@ -83,6 +82,10 @@ export default function Post({ post }) {
       });
   }, [post.userId]);
 
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
+
   return (
     <div className="post">
       <div className="postWrapper">
@@ -99,7 +102,19 @@ export default function Post({ post }) {
             <span className="postDate">{post.createdAt}</span>
           </div>
           <div className="postTopRight">
-            <MoreVert />
+            <MoreVert onClick={toggleMenu} />
+            {menuVisible && (
+              <ul className="dropdownMenu">
+                <li
+                  onClick={async () => {
+                    await deletePost(post._id);
+                    setMenuVisible(false);
+                  }}
+                >
+                  Eliminar
+                </li>
+              </ul>
+            )}
           </div>
         </div>
         <div className="postCenter">

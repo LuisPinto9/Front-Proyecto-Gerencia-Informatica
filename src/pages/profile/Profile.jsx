@@ -8,6 +8,7 @@ import { useParams } from "react-router";
 export default function Profile() {
   const [user, setUser] = useState({});
   const [imagens] = useState("/images/person/");
+  const homeStatus = false;
 
   const username = useParams().username;
 
@@ -30,7 +31,7 @@ export default function Profile() {
 
   return (
     <>
-      <Topbar user={user} />
+      <Topbar user={user}/>
       <div className="profile">
         <Sidebar />
         <div className="profileRight">
@@ -53,7 +54,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed2 user={user} />
+            <Feed2 user={user} homeStatus={homeStatus}/>
             {
               console.log("prfoile",user.username)
             }

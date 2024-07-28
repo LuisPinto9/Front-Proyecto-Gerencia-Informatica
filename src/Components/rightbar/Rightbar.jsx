@@ -153,27 +153,25 @@ export default function Rightbar({ user }) {
 
         <h4 className="rightbarTitle">Siguiendo</h4>
         <div className="rightbarFollowings">
-          {follows.map((follows) => (
-            <div className="rightbarFollowing">
-              <Link to={`http://localhost:3000/profile/${follows.username}`}>
-                <img
-                  src={follows.profilePicture || imagens + "1.jpeg"}
-                  alt=""
-                  className="rightbarFollowingImg"
-                />
-              </Link>
-              <span className="rightbarFollowingName">{follows.username}</span>
-            </div>
-          ))}
-
-          <div className="rightbarFollowing">
-            <img
-              src="/images/person/6.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">usuario ejemplo</span>
-          </div>
+          {follows && follows.length > 0 ? (
+            follows.map((follow) => (
+              <div key={follow.username} className="rightbarFollowing">
+                <Link to={`/profile/${follow.username}`}>
+                  <img
+                    src={follow.profilePicture || `${imagens}1.jpeg`}
+                    alt=""
+                    className="rightbarFollowingImg"
+                  />
+                </Link>
+                <span className="rightbarFollowingName">{follow.username}</span>
+              </div>
+            ))
+          ) : (
+            <p>
+              Aún no sigues a nadie. ¡Explora y encuentra personas interesantes
+              a seguir!
+            </p>
+          )}
         </div>
       </>
     );

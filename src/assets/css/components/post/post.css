@@ -118,3 +118,55 @@
   border-radius: 5px;
   margin-bottom: 10px;
 }
+
+.shareButton {
+  border: none;
+  padding: 7px;
+  border-radius: 5px;
+  background-color: green;
+  font-weight: 500;
+  margin-right: 20px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.shareButton.disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.postTopRight {
+  position: relative;
+  display: inline-block;
+}
+
+.postTopRight .MuiSvgIcon-root {
+  cursor: pointer; /* Cambia el cursor cuando pasa sobre el ícono MoreVert */
+}
+
+.dropdownMenu {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  list-style: none;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdownMenu li {
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: small;
+  background-color: rgb(240, 70, 70);
+  border-radius: 5px;
+  color: white;
+}
+
+.dropdownMenu li:hover {
+  background-color: rgb(255, 112, 112);
+}

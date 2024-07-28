@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Topbar from "../../components/topbar/Topbar";
@@ -12,6 +11,7 @@ export default function Home() {
   const [tokenSaved, setTokenSaved] = useState(false);
   const [username, setUsername] = useState("");
   const [user, setUser] = useState("");
+  const homeStatus = true;
 
   useEffect(() => {
     localStorage.clear();
@@ -23,11 +23,12 @@ export default function Home() {
     }
     if (searchParams.get("username")) {
       SaveLocalStorage("username", searchParams.get("username"));
-      setUsername(searchParams.get("username"));
+      setUsername(JSON.parse(localStorage.getItem("username"))[0]);
     }
   }, []);
+
   useEffect(() => {
-    if (username) { 
+    if (username) {
       fetch(`http://localhost:4000/api/users?username=${username}`)
         .then((res) => {
           if (!res.ok) {
@@ -36,7 +37,7 @@ export default function Home() {
           return res.json();
         })
         .then((result) => {
-          console.log("usuario final",result);
+          console.log("usuario final", result);
           setUser(result);
         })
         .catch((error) => {
@@ -50,8 +51,8 @@ export default function Home() {
       <Topbar user={user} />
       <div className="homeContainer">
         <Sidebar />
-        <Feed user={user} home={true}/>
-        <Rightbar  user={user}/>
+        <Feed user={user} homeStatus={homeStatus} />
+        <Rightbar user={user} />
       </div>
       {/* {tokenSaved ? <div>Token saved successfully</div> : <div>Saving token...</div>}
       {user? <div> a</div> : <div>Saving token...</div>} */}

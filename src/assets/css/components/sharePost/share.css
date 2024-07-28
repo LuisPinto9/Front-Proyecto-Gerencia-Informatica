@@ -41,54 +41,58 @@
   justify-content: space-between;
 }
 
-.shareOptions{
-    display: flex;
-    margin-left: 20px;
+.shareOptions {
+  display: flex;
+  margin-left: 20px;
 }
 
-.shareOption{
-    display: flex;
-    align-items: center;
-    margin-right: 15px;
-    cursor: pointer;
+.shareOption {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  cursor: pointer;
 }
 
-.shareIcon{
-    font-size: 18px;
-    margin-right: 3px;
+.shareIcon {
+  font-size: 18px;
+  margin-right: 3px;
 }
 
-.shareOptionText{
-    font-size: 14px;
-    font-weight: 500;
+.shareOptionText {
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.shareButton{
-    border: none;
-    padding: 7px;
-    border-radius: 5px;
-    background-color: green;
-    font-weight: 500;
-    margin-right: 20px;
-    cursor: pointer;
-    color: white;
+.shareButton {
+  border: none;
+  padding: 7px;
+  border-radius: 5px;
+  background-color: green;
+  font-weight: 500;
+  margin-right: 20px;
+  cursor: pointer;
+  color: white;
 }
 
-.shareImgContainer{ 
-  padding:0 28px 10px 20px; 
-  position: relative; 
+.shareButton.disabled {
+  background-color: grey;
+  cursor: not-allowed;
 }
-.shareImg{ 
-  width: 60%; 
+
+.shareImgContainer {
+  padding: 0 28px 10px 20px;
+  position: relative;
+}
+.shareImg {
+  width: 60%;
   object-fit: cover;
-} 
-.shareCanceImg{
-  position: absolute; 
-  top: 0; 
-  right:20px; 
+}
+.shareCanceImg {
+  position: absolute;
+  top: 0;
+  right: 20px;
   cursor: pointer;
   opacity: 0.7;
-
 }
 
 .shareImgContainer {
