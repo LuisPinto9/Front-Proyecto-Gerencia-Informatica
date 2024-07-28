@@ -11,6 +11,9 @@ import Online from "../online/Online";
 
 
 export default function Rightbar({ user }) {
+
+  const [follower, setFollower] = useState([]);
+
   const [follows, setFollows] = useState([]);
   const [imagens] = useState("/images/person/");
   const [followed, setFollowed] = useState(false);
@@ -25,6 +28,7 @@ export default function Rightbar({ user }) {
   useEffect(() => {
     if (user) {
       loadUser();
+      seguidores();
       getUserPrincipal();
     }
   }, [user]);
@@ -80,6 +84,25 @@ export default function Rightbar({ user }) {
         console.error("Fetch error:", error);
       });
   };
+
+  const seguidores = () => {
+    const url = `${import.meta.env.VITE_API_URL}/api/users/${user._id}/getFollowers`;
+
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("ok");
+        }
+        return res.json();
+      })
+      .then((result) => {
+        setFollower(result);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  };
+
 
   const handleClick = async () => {
     const url = followed
@@ -217,12 +240,6 @@ export default function Rightbar({ user }) {
           </button>
         )}
 
-{/* username: user.username || "",
-        phone: user.phone || "",
-        city: user.city || "",
-        from: user.from || "",
-        desc: user.desc || "", */}
-
         <h4 className="rightbarTitle">Información de usuario</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
@@ -273,8 +290,8 @@ export default function Rightbar({ user }) {
 
         <h4 className="rightbarTitle">Seguidores</h4>
         <div className="rightbarFollowings">
-          {follows && follows.length > 0 ? (
-            follows.map((follow) => (
+          {follower && follower.length > 0 ? (
+            follower.map((follow) => (
               <div key={follow.username} className="rightbarFollowing">
                 <Link to={`/profile/${follow.username}`}>
                   <img
