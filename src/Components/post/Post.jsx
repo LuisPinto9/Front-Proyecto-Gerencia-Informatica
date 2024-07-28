@@ -14,7 +14,7 @@ export default function Post({ post, deletePost }) {
   const submitCommentHandler = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/api/posts/${post._id}/comment`,
+        `${import.meta.env.VITE_API_URL}/api/posts/${post._id}/comment`,
         {
           method: "PUT",
           headers: {
@@ -40,7 +40,7 @@ export default function Post({ post, deletePost }) {
     console.log("entro");
     try {
       const response = await fetch(
-        `http://localhost:4000/api/posts/${post._id}/like`,
+        `${import.meta.env.VITE_API_URL}/api/posts/${post._id}/like`,
         {
           method: "PUT",
           headers: {
@@ -67,7 +67,7 @@ export default function Post({ post, deletePost }) {
 
   useEffect(() => {
     console.log(post);
-    fetch(`http://localhost:4000/api/users?userId=${post.userId}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/users?userId=${post.userId}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("ok");
@@ -91,7 +91,7 @@ export default function Post({ post, deletePost }) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`http://localhost:3000/profile/${user.username}`}>
+            <Link to={`/profile/${user.username}`}>
               <img
                 className="postProfileImg"
                 src={user.profilePicture || imagens + "1.png"}

@@ -31,7 +31,7 @@ export default function Home() {
 
   useEffect(() => {
     if (username) {
-      fetch(`http://localhost:4000/api/users?username=${username}`)
+      fetch(`${import.meta.env.VITE_API_URL}/api/users?username=${username}`)
         .then((res) => {
           if (!res.ok) {
             throw new Error("Fetch failed");

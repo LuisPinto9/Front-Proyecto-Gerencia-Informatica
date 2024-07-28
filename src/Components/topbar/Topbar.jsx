@@ -10,7 +10,7 @@ export default function Topbar({ username }) {
   const [imagens] = useState("/images/person/");
 
   useEffect(() => {
-    fetch(`http://localhost:4000/api/users?username=${username}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/users?username=${username}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("ok");
@@ -29,7 +29,7 @@ export default function Topbar({ username }) {
     <div className="topbarContainer">
       <div className="topbarLeft">
         <Link
-          to={`http://localhost:3000/home`}
+          to={`/home`}
           style={{ textDecoration: "none" }}
         >
           <span className="logo">Handy</span>
@@ -65,7 +65,7 @@ export default function Topbar({ username }) {
             <Notifications />
             <span className="topbarIconBadge">1</span>
           </div>
-          <Link to={`http://localhost:3000/profile/${user.username}`}>
+          <Link to={`/profile/${user.username}`}>
             <div className="topbarIconItem">
               <img
                 src={user.profilePicture || imagens + "1.png"}

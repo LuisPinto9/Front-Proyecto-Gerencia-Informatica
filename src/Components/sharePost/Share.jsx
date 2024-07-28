@@ -22,7 +22,7 @@ export default function Share({ user, loadPost, homeStatus, loadAllPosts }) {
       if (desc.current.value) data.append("desc", desc.current.value);
       data.append("userId", user._id);
 
-      fetch("http://localhost:4000/api/posts/", {
+      fetch(`${import.meta.env.VITE_API_URL}/api/posts/`, {
         method: "POST",
         body: data, // Envía FormData directamente sin JSON.stringify
       })
@@ -59,7 +59,7 @@ export default function Share({ user, loadPost, homeStatus, loadAllPosts }) {
     <div className="share">
       <div className="shareWrapper">
         <div className="shareTop">
-          <Link to={`http://localhost:3000/profile/${user.username}`}>
+          <Link to={`/profile/${user.username}`}>
             <img
               className="shareProfileImg"
               src={user.profilePicture || imagens + "1.png"}

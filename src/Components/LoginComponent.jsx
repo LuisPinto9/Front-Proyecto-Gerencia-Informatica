@@ -6,7 +6,7 @@ const LoginComponent = () => {
   const googleAuth = async () => {
     try {
       // Realiza una solicitud al backend para iniciar sesión con Google
-      window.location.href = "http://localhost:4000/auth/google";
+      window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
     } catch (error) {
       console.error("Error al iniciar sesión con Google:", error);
     }

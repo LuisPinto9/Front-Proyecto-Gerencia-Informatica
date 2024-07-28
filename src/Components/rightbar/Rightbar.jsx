@@ -35,7 +35,7 @@ export default function Rightbar({ user }) {
 
   const getUserPrincipal = () => {
     fetch(
-      `http://localhost:4000/api/users?username=${
+      `${import.meta.env.VITE_API_URL}/api/users?username=${
         JSON.parse(localStorage.getItem("username"))[0]
       }`
     )
@@ -54,7 +54,7 @@ export default function Rightbar({ user }) {
   };
 
   const loadUser = () => {
-    const url = `http://localhost:4000/api/users/${user._id}/getFollows`;
+    const url = `${import.meta.env.VITE_API_URL}/api/users/${user._id}/getFollows`;
 
     fetch(url)
       .then((res) => {
@@ -95,8 +95,8 @@ export default function Rightbar({ user }) {
   const handleClick = async () => {
     try {
       const url = followed
-        ? `http://localhost:4000/api/users/${user._id}/unfollow`
-        : `http://localhost:4000/api/users/${user._id}/follow`;
+        ? `${import.meta.env.VITE_API_URL}/api/users/${user._id}/unfollow`
+        : `${import.meta.env.VITE_API_URL}/api/users/${user._id}/follow`;
 
       fetch(url, {
         method: "PUT",

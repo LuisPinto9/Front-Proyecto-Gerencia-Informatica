@@ -16,7 +16,7 @@ export default function Feed2({ user, homeStatus }) {
   }, [user]);
 
   const loadAllPosts = () => {
-    fetch("http://localhost:4000/api/posts/allPosts")
+    fetch(`${import.meta.env.VITE_API_URL}/api/posts/allPosts`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("ok");
@@ -39,8 +39,8 @@ export default function Feed2({ user, homeStatus }) {
     console.log("fedd2", user.username);
 
     const url = user
-      ? `http://localhost:4000/api/posts/profile/${user.username}`
-      : `http://localhost:4000/api/posts/timeline/${user._id}`;
+      ? `${import.meta.env.VITE_API_URL}/api/posts/profile/${user.username}`
+      : `${import.meta.env.VITE_API_URL}/api/posts/timeline/${user._id}`;
 
     fetch(url)
       .then((res) => {
@@ -63,7 +63,7 @@ export default function Feed2({ user, homeStatus }) {
 
   const deletePost = async (id) => {
     try {
-      const response = await fetch(`http://localhost:4000/api/posts/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
