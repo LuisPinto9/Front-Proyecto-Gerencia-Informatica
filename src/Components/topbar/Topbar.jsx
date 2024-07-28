@@ -93,7 +93,7 @@ export default function Topbar({ username }) {
       <div className="topbarRight">
         <div className="topbarLinks">
           <Link to={`/home`} style={{ textDecoration: "none", color: "white" }}>
-            <span className="topbarLink">Início</span>
+            <span className="topbarLink">Inicio</span>
           </Link>
           <span className="topbarLink">Historial</span>
         </div>
