@@ -1,6 +1,6 @@
 import Topbar from "../../components/topbar/Topbar";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Feed2 from "../../components/feed/Feed2";
+import Perfil from "../../components/rightbar/Perfil";
+import Feed2 from "../../components/feed/Feed2/";
 import Rightbar from "../../components/rightbar/Rightbar";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
@@ -32,7 +32,7 @@ export default function Profile() {
     <>
       <Topbar username={JSON.parse(localStorage.getItem("username"))[0]} />
       <div className="profile">
-        <Sidebar />
+        <Perfil user={user} />
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">

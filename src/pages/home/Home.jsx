@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
-import Rightbar from "../../components/rightbar/Rightbar";
+import Perfil from "../../components/rightbar/Perfil";
 import { SaveLocalStorage } from "../../helpers/SaveLocalStorage";
 
 export default function Home() {
@@ -52,6 +52,7 @@ export default function Home() {
     <>
       <Topbar username={username} />
       <div className="homeContainer">
+      
         <Sidebar />
         <Feed user={user} homeStatus={homeStatus} />
         {/* <Rightbar user={user} /> */}
