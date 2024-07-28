@@ -1,17 +1,26 @@
-import { Users } from "../../assets/js/dummyData";
-import Online from "../online/Online";
-import "../../assets/css/components/rightbar/rightbar.css";
-import { useState, useEffect } from "react";
-import { json, Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { json,Link } from "react-router-dom";
 import { Add, Remove } from "@mui/icons-material";
+import { Dialog } from "primereact/dialog";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { Toast } from "primereact/toast";
+import { Users } from "../../assets/js/dummyData";
+import "../../assets/css/components/rightbar/rightbar.css";
+import Online from "../online/Online";
+
 
 export default function Rightbar({ user }) {
-  //amiguis
   const [follows, setFollows] = useState([]);
   const [imagens] = useState("/images/person/");
-  //swguidores
   const [followed, setFollowed] = useState(false);
   const [userPrincipal, setUserPrincipalFollowed] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editUser, setEditUser] = useState({
+    username: "",
+    phone: "",
+  });
+  const toast = useRef(null);
 
   useEffect(() => {
     if (user) {
@@ -27,17 +36,17 @@ export default function Rightbar({ user }) {
   }, [userPrincipal]);
 
   const getUserfollowed = () => {
-    const isFollowed = userPrincipal.followings.some(
-      (following) => following._id === user._id
-    );
-    setFollowed(isFollowed);
+    if (userPrincipal && userPrincipal.followings) {
+      setFollowed(userPrincipal.followings.includes(user?.id));
+    }
+    
   };
 
   const getUserPrincipal = () => {
     fetch(
-      `${import.meta.env.VITE_API_URL}/api/users?username=${
-        JSON.parse(localStorage.getItem("username"))[0]
-      }`
+      `${import.meta.env.VITE_API_URL}/api/users?username=${localStorage
+        .getItem("username")
+        .replace(/[\[\]"]/g, "")}`
     )
       .then((res) => {
         if (!res.ok) {
@@ -49,7 +58,7 @@ export default function Rightbar({ user }) {
         setUserPrincipalFollowed(result);
       })
       .catch((error) => {
-        // console.log('Fetch error:', error);
+        console.error("Fetch error:", error);
       });
   };
 
@@ -67,8 +76,104 @@ export default function Rightbar({ user }) {
         setFollows(result);
       })
       .catch((error) => {
-        // console.log('Fetch error:', error);
+        console.error("Fetch error:", error);
       });
+  };
+
+  const handleClick = async () => {
+    const url = followed
+      ? `${import.meta.env.VITE_API_URL}/api/users/${user._id}/unfollow`
+      : `${import.meta.env.VITE_API_URL}/api/users/${user._id}/follow`;
+
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: userPrincipal._id }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setFollowed(!followed);
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  };
+  useEffect(() => {
+    if (user) {
+      setEditUser({
+        username: user.username || "",
+        phone: user.phone || "",
+        city: user.city || "",
+        from: user.from || "",
+        desc: user.desc || "",
+      });
+    }
+  }, [user]);
+  const handleEditUser = async () => {
+    const url = `${import.meta.env.VITE_API_URL}/api/users/update/${user._id}`;
+    fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editUser),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.state) {
+          toast.current.show({
+            severity: "success",
+            summary: "Usuario actualizado",
+            detail:
+              "La información del usuario ha sido actualizada correctamente",
+            life: 3000,
+          });
+          setShowEditModal(false);
+          setUserPrincipalFollowed(data.data);
+        } else {
+          toast.current.show({
+            severity: "error",
+            summary: "Error",
+            detail:
+              data.error || "No se pudo actualizar la información del usuario",
+            life: 3000,
+          });
+        }
+      })
+      .catch((error) => {
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Error al actualizar la información del usuario",
+          life: 3000,
+        });
+      });
+  };
+
+  const renderFooter = () => {
+    return (
+      <div>
+        <Button
+          label="Cancelar"
+          icon="pi pi-times"
+          onClick={() => setShowEditModal(false)}
+          className="p-button-text"
+        />
+        <Button label="Guardar" icon="pi pi-check" onClick={handleEditUser} />
+      </div>
+    );
   };
 
   const HomeRightbar = () => {
@@ -92,44 +197,19 @@ export default function Rightbar({ user }) {
     );
   };
 
-  const handleClick = async () => {
-    try {
-      const url = followed
-        ? `${import.meta.env.VITE_API_URL}/api/users/${user._id}/unfollow`
-        : `${import.meta.env.VITE_API_URL}/api/users/${user._id}/follow`;
-
-      fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId: userPrincipal._id }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(
-              "Network response was not ok " + response.statusText
-            );
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Success:", data);
-          setFollowed(!followed);
-        })
-        .catch((error) => {
-          console.log("Fetch error:", error);
-        });
-    } catch (err) {
-      console.log(err);
-    }
-    setFollowed(!followed);
-  };
-
   const ProfileRightbar = () => {
     return (
       <>
-        {user.username !== JSON.parse(localStorage.getItem("username"))[0] && (
+        {user.username ===
+          localStorage.getItem("username").replace(/[\[\]"]/g, "") && (
+          <Button
+            label="Editar"
+            icon="pi pi-pencil"
+            onClick={() => setShowEditModal(true)}
+          />
+        )}
+        {user.username !==
+          localStorage.getItem("username").replace(/[\[\]"]/g, "") && (
           <button className="rightbarFollowButton" onClick={handleClick}>
             {followed ? "Unfollow" : "Follow"}
             {followed ? <Remove /> : <Add />}
@@ -183,6 +263,67 @@ export default function Rightbar({ user }) {
       <div className="rightbarWrapper">
         {user ? <ProfileRightbar /> : <HomeRightbar />}
       </div>
+      <Dialog
+        header="Editar Usuario"
+        visible={showEditModal}
+        style={{ width: "50vw" }}
+        footer={renderFooter()}
+        onHide={() => setShowEditModal(false)}
+      >
+        <div className="p-fluid">
+          <div className="p-field">
+            <label htmlFor="username">Username</label>
+            <InputText
+              id="username"
+              value={editUser.username}
+              onChange={(e) =>
+                setEditUser({ ...editUser, username: e.target.value })
+              }
+            />
+          </div>
+          <div className="p-field">
+            <label htmlFor="phone">Phone</label>
+            <InputText
+              id="phone"
+              value={editUser.phone}
+              onChange={(e) =>
+                setEditUser({ ...editUser, phone: e.target.value })
+              }
+            />
+          </div>
+          <div className="p-field">
+            <label htmlFor="city">City</label>
+            <InputText
+              id="city"
+              value={editUser.city}
+              onChange={(e) =>
+                setEditUser({ ...editUser, city: e.target.value })
+              }
+            />
+          </div>
+          <div className="p-field">
+            <label htmlFor="from">From</label>
+            <InputText
+              id="from"
+              value={editUser.from}
+              onChange={(e) =>
+                setEditUser({ ...editUser, from: e.target.value })
+              }
+            />
+          </div>
+          <div className="p-field">
+            <label htmlFor="desc">Description</label>
+            <InputText
+              id="desc"
+              value={editUser.desc}
+              onChange={(e) =>
+                setEditUser({ ...editUser, desc: e.target.value })
+              }
+            />
+          </div>
+        </div>
+      </Dialog>
+      <Toast ref={toast} />
     </div>
   );
 }
