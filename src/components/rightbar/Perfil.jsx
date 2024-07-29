@@ -9,8 +9,9 @@ import { Users } from "../../assets/js/dummyData";
 import "../../assets/css/components/rightbar/rightbar.css";
 import Online from "../online/Online";
 
-export default function Perfil({ user }) {
+export default function Perfil({ user, setUser }) {
   const [showEditModal, setShowEditModal] = useState(false);
+  const [userPrincipal, setUserPrincipalFollowed] = useState(null);
   const [editUser, setEditUser] = useState({
     username: "",
     phone: "",
@@ -51,6 +52,8 @@ export default function Perfil({ user }) {
 
   useEffect(() => {
     if (user) {
+      // 
+      
       setEditUser({
         username: user.username || "",
         phone: user.phone || "",
@@ -65,7 +68,6 @@ export default function Perfil({ user }) {
   }, [user]);
 
   const handleEditUser = async () => {
-    // console.log("usuario edita",editUser)
     const url = `${import.meta.env.VITE_API_URL}/api/users/update/${user._id}`;
     fetch(url, {
       method: "PATCH",
@@ -103,12 +105,12 @@ export default function Perfil({ user }) {
         }
       })
       .catch((error) => {
-        // toast.current.show({
-        //   severity: "error",
-        //   summary: "Error",
-        //   detail: "Error al actualizar la información del usuario",
-        //   life: 3000,
-        // });
+        toast.current.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Error al actualizar la información del usuario",
+          life: 3000,
+        });
       });
   };
 
