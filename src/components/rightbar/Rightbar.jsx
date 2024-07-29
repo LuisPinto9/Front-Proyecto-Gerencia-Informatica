@@ -32,14 +32,17 @@ export default function Rightbar({ user }) {
   }, [userPrincipal]);
 
   const getUserfollowed = () => {
-    if (userPrincipal && userPrincipal.followings) {
-      setFollowed(userPrincipal.followings.includes(user._id));
-    }
+    const isFollowed = userPrincipal.followings.some(
+      (following) => following._id === user._id
+    );
+    setFollowed(isFollowed);
   };
 
   const getUserPrincipal = () => {
     fetch(
-      `${import.meta.env.VITE_API_URL}/api/users?username=${JSON.parse(localStorage.getItem("username"))[0]}`
+      `${import.meta.env.VITE_API_URL}/api/users?username=${
+        JSON.parse(localStorage.getItem("username"))[0]
+      }`
     )
       .then((res) => {
         if (!res.ok) {
@@ -148,11 +151,11 @@ export default function Rightbar({ user }) {
         {user.username !==
           localStorage.getItem("username").replace(/[\[\]"]/g, "") && (
           <div className="rightbarInfoItem">
-            <h4 className="rightbarTitle">Agrega un seguidor</h4>
+            <h4 className="rightbarTitle">Seguir Usuario</h4>
             <div className="rightbarInfo">
               <button className="rightbarFollowButton" onClick={handleClick}>
-                {followed ? "Unfollow" : "Follow"}
                 {followed ? <Remove /> : <Add />}
+                {followed ? "Dejar de Seguir" : "Seguir"}
               </button>
             </div>
           </div>
@@ -165,7 +168,7 @@ export default function Rightbar({ user }) {
               <div key={follow.username} className="rightbarFollowing">
                 <Link to={`/profile/${follow.username}`}>
                   <img
-                    src={follow.profilePicture || `${imagens}1.jpeg`}
+                    src={follow.profilePicture || `${imagens}4.jpeg`}
                     alt=""
                     className="rightbarFollowingImg"
                   />
@@ -188,7 +191,7 @@ export default function Rightbar({ user }) {
               <div key={follow.username} className="rightbarFollowing">
                 <Link to={`/profile/${follow.username}`}>
                   <img
-                    src={follow.profilePicture || `${imagens}1.jpeg`}
+                    src={follow.profilePicture || `${imagens}4.jpeg`}
                     alt=""
                     className="rightbarFollowingImg"
                   />
@@ -198,7 +201,8 @@ export default function Rightbar({ user }) {
             ))
           ) : (
             <p>
-              Nadie te está siguiendo aún. ¡Comparte tus habilidades para atraer seguidores!
+              Nadie te está siguiendo aún. ¡Comparte tus habilidades para atraer
+              seguidores!
             </p>
           )}
         </div>

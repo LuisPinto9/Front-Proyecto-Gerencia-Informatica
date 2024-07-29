@@ -62,7 +62,7 @@ export default function Share({ user, loadPost, homeStatus, loadAllPosts }) {
           <Link to={`/profile/${user.username}`}>
             <img
               className="shareProfileImg"
-              src={user.profilePicture || imagens + "1.png"}
+              src={user.profilePicture || imagens + "4.jpeg"}
               alt=""
             />
           </Link>

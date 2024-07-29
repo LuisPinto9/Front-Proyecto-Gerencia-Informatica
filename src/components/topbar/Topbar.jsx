@@ -23,7 +23,7 @@ export default function Topbar({ username }) {
         setUser(result);
       })
       .catch((error) => {
-        console.log('Fetch error:', error);
+        console.log("Fetch error:", error);
       });
   }, [username]);
 
@@ -31,7 +31,11 @@ export default function Topbar({ username }) {
     setSearchText(e.target.value);
     if (e.target.value.length > 0) {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/search?username=${e.target.value}`);
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/users/search?username=${
+            e.target.value
+          }`
+        );
         if (!res.ok) {
           throw new Error("Search failed");
         }
@@ -78,7 +82,7 @@ export default function Topbar({ username }) {
                 >
                   <div className="searchResultItem">
                     <img
-                      src={result.profilePicture || imagens + "1.png"}
+                      src={result.profilePicture || imagens + "4.jpeg"}
                       alt=""
                       className="searchResultImg"
                     />
@@ -113,7 +117,7 @@ export default function Topbar({ username }) {
           <Link to={`/profile/${user.username}`}>
             <div className="topbarIconItem">
               <img
-                src={user.profilePicture || imagens + "1.png"}
+                src={user.profilePicture || imagens + "4.jpeg"}
                 alt=""
                 className="topbarImg"
               />

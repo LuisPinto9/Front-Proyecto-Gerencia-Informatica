@@ -1,5 +1,3 @@
-
-
 .rightbar {
   flex: 3.5;
 }
@@ -48,6 +46,8 @@
 
 .rightbarInfo {
   margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
 }
 
 .rightbarInfoItem {
@@ -73,7 +73,6 @@
 .rightbarFollowing {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
   cursor: pointer;
 }
 
@@ -95,23 +94,28 @@
 }
 
 .rightbarFollowButton {
-  margin-top: 3Õpx;
-  margin-bottom: IBpx;
   border: none;
-  background-color: #344dda;
+  background-color: #06b6d4;
   color: white;
   border-radius: 5px;
-  padding: 5px 10 px;
+  padding: 10px 15px;
   align-items: center;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: bolder;
   cursor: pointer;
+  display: flex;
+  transition: background-color 0.2s ease;
 }
+
+.rightbarFollowButton:hover {
+  background-color: #0891b2;
+}
+
 .rightbarFollowButton:focus {
   outline: none;
 }
 
-.rightbarInfoItem1{
+.rightbarInfoItem1 {
   background-color: rgb(255, 255, 255);
   margin: 10px 0;
   padding: 15px;

@@ -32,7 +32,6 @@ export default function Profile() {
     <>
       <Topbar username={JSON.parse(localStorage.getItem("username"))[0]} />
       <div className="profile">
-        
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
@@ -43,7 +42,7 @@ export default function Profile() {
               />
               <img
                 className="profileUserImg"
-                src={user.profilePicture || imagens + "1.png"}
+                src={user.profilePicture || imagens + "4.jpeg"}
                 alt=""
               />
             </div>
@@ -53,7 +52,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-          <Perfil user={user} />
+            <Perfil user={user} />
             <Feed2 user={user} homeStatus={homeStatus} />
             {console.log("prfoile", user.username)}
             <Rightbar user={user} />
