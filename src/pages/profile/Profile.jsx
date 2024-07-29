@@ -52,7 +52,7 @@ export default function Profile() {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Perfil user={user} />
+            <Perfil user={user} setUser={setUser}/>
             <Feed2 user={user} homeStatus={homeStatus} />
             {console.log("prfoile", user.username)}
             <Rightbar user={user} />

@@ -90,6 +90,7 @@ export default function Perfil({ user }) {
             life: 3000,
           });
           setShowEditModal(false);
+          setUser(data.data);
           setUserPrincipalFollowed(data.data);
         } else {
           toast.current.show({
@@ -102,12 +103,12 @@ export default function Perfil({ user }) {
         }
       })
       .catch((error) => {
-        toast.current.show({
-          severity: "error",
-          summary: "Error",
-          detail: "Error al actualizar la información del usuario",
-          life: 3000,
-        });
+        // toast.current.show({
+        //   severity: "error",
+        //   summary: "Error",
+        //   detail: "Error al actualizar la información del usuario",
+        //   life: 3000,
+        // });
       });
   };
 
