@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import RssFeed from "@mui/icons-material/RssFeed";
 import Chat from "@mui/icons-material/Chat";
 import PlayCircleFilledOutlined from "@mui/icons-material/PlayCircleFilledOutlined";
@@ -7,11 +8,34 @@ import HelpOutline from "@mui/icons-material/HelpOutline";
 import WorkOutline from "@mui/icons-material/WorkOutline";
 import Event from "@mui/icons-material/Event";
 import School from "@mui/icons-material/School";
-
-import { Users } from "../../assets/js/dummyData";
+import { Link } from "react-router-dom";
 import CloseFriend from "../closeFriend/CloseFriend";
 
 export default function Sidebar() {
+  const [followings, setFollowings] = useState([]);
+
+  useEffect(() => {
+    const fetchFollowings = async () => {
+      try {
+        const username = JSON.parse(localStorage.getItem("username"))[0];
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users?username=${username}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch user");
+        }
+        const user = await res.json();
+        const followingsRes = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${user._id}/getFollows`);
+        if (!followingsRes.ok) {
+          throw new Error("Failed to fetch followings");
+        }
+        const followingsData = await followingsRes.json();
+        setFollowings(followingsData);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchFollowings();
+  }, []);
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -56,8 +80,10 @@ export default function Sidebar() {
         <button className="sidebarButton">Mostrar Mas</button>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
-          {Users.map((u) => (
-            <CloseFriend key={u.id} user={u} />
+          {followings.map((u) => (
+            <Link to={`/profile/${u.username}`} key={u._id} style={{ textDecoration: "none", color: "inherit" }}>
+              <CloseFriend user={u} />
+            </Link>
           ))}
         </ul>
       </div>
