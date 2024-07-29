@@ -13,6 +13,8 @@ import CloseFriend from "../closeFriend/CloseFriend";
 
 export default function Sidebar() {
   const [followings, setFollowings] = useState([]);
+  const [followersOfFollowings, setFollowersOfFollowings] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState(null);
 
   useEffect(() => {
     const fetchFollowings = async () => {
@@ -23,12 +25,27 @@ export default function Sidebar() {
           throw new Error("Failed to fetch user");
         }
         const user = await res.json();
+        setCurrentUserId(user._id);
         const followingsRes = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${user._id}/getFollows`);
         if (!followingsRes.ok) {
           throw new Error("Failed to fetch followings");
         }
         const followingsData = await followingsRes.json();
         setFollowings(followingsData);
+
+        const followersData = await Promise.all(followingsData.map(async (f) => {
+          const followersRes = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${f._id}/getFollowers`);
+          if (!followersRes.ok) {
+            throw new Error("Failed to fetch followers of followings");
+          }
+          return followersRes.json();
+        }));
+
+        // Flatten the array of arrays and filter out duplicates and already followed users
+        const uniqueFollowers = Array.from(new Set(followersData.flat().map(a => a._id)))
+          .map(id => followersData.flat().find(a => a._id === id))
+          .filter(follower => !followingsData.some(f => f._id === follower._id) && follower._id !== user._id);
+        setFollowersOfFollowings(uniqueFollowers);
       } catch (err) {
         console.error(err);
       }
@@ -79,8 +96,17 @@ export default function Sidebar() {
         </ul>
         <button className="sidebarButton">Mostrar Mas</button>
         <hr className="sidebarHr" />
+        <h4 className="sidebarTitle">Amigos</h4>
         <ul className="sidebarFriendList">
           {followings.map((u) => (
+            <Link to={`/profile/${u.username}`} key={u._id} style={{ textDecoration: "none", color: "inherit" }}>
+              <CloseFriend user={u} />
+            </Link>
+          ))}
+        </ul>
+        <h4 className="sidebarTitle">Amigos de mis amigos</h4>
+        <ul className="sidebarFriendList">
+          {followersOfFollowings.map((u) => (
             <Link to={`/profile/${u.username}`} key={u._id} style={{ textDecoration: "none", color: "inherit" }}>
               <CloseFriend user={u} />
             </Link>
