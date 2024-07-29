@@ -33,15 +33,13 @@ export default function Rightbar({ user }) {
 
   const getUserfollowed = () => {
     if (userPrincipal && userPrincipal.followings) {
-      setFollowed(userPrincipal.followings.includes(user?.id));
+      setFollowed(userPrincipal.followings.includes(user._id));
     }
   };
 
   const getUserPrincipal = () => {
     fetch(
-      `${import.meta.env.VITE_API_URL}/api/users?username=${localStorage
-        .getItem("username")
-        .replace(/[\[\]"]/g, "")}`
+      `${import.meta.env.VITE_API_URL}/api/users?username=${JSON.parse(localStorage.getItem("username"))[0]}`
     )
       .then((res) => {
         if (!res.ok) {
@@ -200,8 +198,7 @@ export default function Rightbar({ user }) {
             ))
           ) : (
             <p>
-              Aún no sigues a nadie. ¡Explora y encuentra personas interesantes
-              a seguir!
+              Nadie te está siguiendo aún. ¡Comparte tus habilidades para atraer seguidores!
             </p>
           )}
         </div>

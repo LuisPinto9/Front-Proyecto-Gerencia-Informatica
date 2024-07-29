@@ -17,9 +17,9 @@ export default function Perfil({ user }) {
     city: "",
     from: "",
     desc: "",
-    skills: "", 
-    workExperience: "", 
-    interests: "" 
+    skills: "",
+    workExperience: "",
+    interests: "",
   });
   const toast = useRef(null);
 
@@ -162,7 +162,7 @@ export default function Perfil({ user }) {
         )}
 
         <div className="rightbarInfoItem1">
-          <span className="rightbarTitle">UBICACION</span>
+          <span className="rightbarTitle">Ubicación</span>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Ciudad actual:</span>
             <span className="rightbarInfoValue">{user.city}</span>
@@ -170,21 +170,21 @@ export default function Perfil({ user }) {
             <span className="rightbarInfoKey">De:</span>
             <span className="rightbarInfoValue">{user.from}</span>
           </div>
-          <span className="rightbarTitle">INFORMACION DE CONTACTO</span>
+          <span className="rightbarTitle">Información de Contacto</span>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Teléfono:</span>
             <span className="rightbarInfoValue">{user.phone}</span>
             <p></p>
-            <span className="rightbarInfoKey">correo:</span>
+            <span className="rightbarInfoKey">Correo:</span>
             <span className="rightbarInfoValue">{user.email}</span>
           </div>
-          <h4 className="rightbarTitle">INFORMACION DE PERFIL</h4>
+          <h4 className="rightbarTitle">Información del Perfil</h4>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Acerca de mi:</span>
             <span className="rightbarInfoValue">{user.desc}</span>
           </div>
           <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">Experiencia laboral:</span>
+            <span className="rightbarInfoKey">Experiencia Laboral:</span>
             <span className="rightbarInfoValue">{user.workExperience}</span>
           </div>
           <div className="rightbarInfoItem">
@@ -272,7 +272,8 @@ export default function Perfil({ user }) {
                 setEditUser({ ...editUser, skills: e.target.value })
               }
             />
-          </div><div className="p-field">
+          </div>
+          <div className="p-field">
             <label htmlFor="workExperience">Experiencia</label>
             <InputText
               id="workExperience"
@@ -281,7 +282,8 @@ export default function Perfil({ user }) {
                 setEditUser({ ...editUser, workExperience: e.target.value })
               }
             />
-          </div><div className="p-field">
+          </div>
+          <div className="p-field">
             <label htmlFor="interests">Intereses</label>
             <InputText
               id="interests"
@@ -291,8 +293,6 @@ export default function Perfil({ user }) {
               }
             />
           </div>
-
-
         </div>
       </Dialog>
       <Toast ref={toast} />
