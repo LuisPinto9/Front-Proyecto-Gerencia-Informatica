@@ -67,7 +67,7 @@ export default function Share({ user, loadPost, homeStatus, loadAllPosts }) {
             />
           </Link>
           <input
-            placeholder={`¿Quieres hacer una publicación ${user.username}? `}
+            placeholder={`¿Quieres hacer una publicación? `}
             className="shareInput"
             ref={desc}
             onKeyUp={(e) => {

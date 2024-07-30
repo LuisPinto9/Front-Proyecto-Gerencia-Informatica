@@ -10,6 +10,7 @@ export default function Post({ post, deletePost }) {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState(post.comments);
   const [menuVisible, setMenuVisible] = useState(false);
+  const [isSameUsername, setIsSameUsername] = useState(false);
 
   const submitCommentHandler = async () => {
     try {
@@ -84,6 +85,14 @@ export default function Post({ post, deletePost }) {
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
+    isSameUser();
+  };
+
+  const isSameUser = () => {
+    const storedUsername = JSON.parse(localStorage.getItem("username"))[0];
+    user.username === storedUsername
+      ? setIsSameUsername(true)
+      : setIsSameUsername(false);
   };
 
   return (
@@ -105,13 +114,18 @@ export default function Post({ post, deletePost }) {
             <MoreVert onClick={toggleMenu} />
             {menuVisible && (
               <ul className="dropdownMenu">
-                <li
-                  onClick={async () => {
-                    await deletePost(post._id);
-                    setMenuVisible(false);
-                  }}
-                >
-                  Eliminar
+                {isSameUsername && (
+                  <li
+                    onClick={async () => {
+                      await deletePost(post._id);
+                      setMenuVisible(false);
+                    }}
+                  >
+                    Eliminar
+                  </li>
+                )}
+                <li style={{ backgroundColor: "blue", marginTop: "5px" }}>
+                  Compartir
                 </li>
               </ul>
             )}

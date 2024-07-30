@@ -100,6 +100,9 @@ export default function Topbar({ username }) {
             <span className="topbarLink">Inicio</span>
           </Link>
           <span className="topbarLink">Historial</span>
+          <Link to={`/`} style={{ textDecoration: "none", color: "white" }}>
+            <span className="topbarLink">Salir</span>
+          </Link>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
